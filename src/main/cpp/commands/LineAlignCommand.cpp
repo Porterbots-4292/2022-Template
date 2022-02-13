@@ -43,7 +43,7 @@ void LineAlignCommand::Execute() {
     // got called, don't do anything else except for stopping the robot because
     // this is an unexpected condition
     //
-    // doing this heer and now could save us a robot crash or some twisty debugging later...
+    // doing this here and now could save us a robot crash or some twisty debugging later...
     
     if (m_lineAlignCompleted) {
         m_drivetrain->DrivetrainTankMove(0.0, 0.0, Porterbots::Drivetrain::kAutoCommand);
@@ -53,9 +53,11 @@ void LineAlignCommand::Execute() {
         
     // all we want to do is check to see if we've encountered a line
     //
-    // once we've seen a line, stop
+    // once we've seen a line, using either sensor, stop the robot as we're done for now
     //
-    // later we'll want to put the actual alignbment logic in here
+    // we stop the drivetrain and we set the m_lineAlignCompleted flag to true
+    //
+    // later we'll want to put the actual alignment logic in here
 
     if (m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor) ||
         m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor)) {
@@ -67,17 +69,21 @@ void LineAlignCommand::Execute() {
         m_lineAlignCompleted = true;
     }
 
-    // else we just let the robot crawl forward for now
+    // else we just let the robot crawl forward at the kLineAlignSpeed for now
 
-    // we'll check again the next time through this routine
+    // we'll check sensors again the next time through this routine
     //
-    // doing short quick checks or changes and getting out is a key
-    // part of keeping the scheduler (and the entire robot) running
+    // doing short quick checks or changes and getting out is a key part
+    // of keeping the scheduler (and the entire robot) running as it should be
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool LineAlignCommand::IsFinished() {
 
+    // this gets set by the Execute() routine when it reaches the terminal state,
+    // that is the robot aligning itself to the alignment line
+    //
+    // we just return it here as it's been set elsewhere
     return m_lineAlignCompleted;
 }
 
