@@ -45,7 +45,7 @@ RobotContainer* RobotContainer::GetInstance() {
 void RobotContainer::ConfigureButtonBindings() {
 
     frc::XboxController* driveController     = getXboxDriveController();
-    
+
     // mechanismController is commented out for now but when you need it to reference buttons on it,
     // it's here and all you have to do is uncomment it to reference it - just got tired of the unused
     // warnings from every build - zog
@@ -54,7 +54,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton m_xboxButton_A{driveController, (int)frc::XboxController::Button::kA};
     frc2::JoystickButton m_xboxButton_X{driveController, (int)frc::XboxController::Button::kX};
 
-    m_xboxButton_A.WhenPressed(LineAlignCommand( &m_drivetrain), true);
+    m_xboxButton_A.WhenPressed(LineAlignCommand(&m_drivetrain), true);
     //m_xboxButton_X.WhenPressed(m_drivetrain.m_lineAlignCommand->Cancel(), true);
 }
 
