@@ -18,21 +18,34 @@
 
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
-RobotContainer::RobotContainer() : m_autonomousCommand() {
+RobotContainer::RobotContainer()
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain) {
 
     // Smartdashboard Subsystems
-
+    frc::SmartDashboard::PutData(&m_drivetrain);
 
     // SmartDashboard Buttons
-    frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
-    frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(&m_drivetrain));
+    frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
+    frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
 
     ConfigureButtonBindings();
 
-    m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand());
+    m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 
     frc::SmartDashboard::PutData("Auto Mode", &m_chooser);
 
+    // set the default drivetrain subsystem command
+    //
+    // this runs when nothing else is using the subsystem - the default command is
+    // to take input from the controller and manually drive the robot
+    //
+    // as soon as any command needs the drivetrain subssytem, this will "take over" the
+    // drivetrain - this is how command sequences that need to "drive" the robot do the
+    // actual driving without the driver interfering with the command
+
+    m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return m_xboxDriveController.GetLeftY(); },
+                                         [this] { return m_xboxDriveController.GetRightY(); },
+                                         m_drivetrain));
 }
 
 RobotContainer* RobotContainer::GetInstance() {
@@ -44,26 +57,8 @@ RobotContainer* RobotContainer::GetInstance() {
 
 void RobotContainer::ConfigureButtonBindings() {
 
-    frc::XboxController* driveController     = getXboxDriveController();
-
-    // mechanismController is commented out for now but when you need it to reference buttons on it,
-    // it's here and all you have to do is uncomment it to reference it - just got tired of the unused
-    // warnings from every build - zog
-    //frc::XboxController* mechanismController = getXboxMechanismController();
-
-    frc2::JoystickButton m_xboxButton_A{driveController, (int)frc::XboxController::Button::kA};
-    frc2::JoystickButton m_xboxButton_X{driveController, (int)frc::XboxController::Button::kX};
-
-    m_xboxButton_A.WhenPressed(LineAlignCommand(&m_drivetrain), true);
-    //m_xboxButton_X.WhenPressed(m_drivetrain.m_lineAlignCommand->Cancel(), true);
-}
-
-frc::XboxController* RobotContainer::getXboxDriveController() {
-   return &m_xboxDriveController;
-}
-
-frc::XboxController* RobotContainer::getXboxMechanismController() {
-   return &m_xboxMechanismController;
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenPressed(LineAlignCommand(m_drivetrain));
+    //frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(LineAlignCommand(m_drivetrain));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

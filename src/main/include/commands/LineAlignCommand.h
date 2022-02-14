@@ -26,7 +26,7 @@
 class LineAlignCommand: public frc2::CommandHelper<frc2::CommandBase, LineAlignCommand> {
 public:
 
-    explicit LineAlignCommand(Drivetrain* m_drivetrain);
+    explicit LineAlignCommand(Drivetrain& m_drivetrain);
 
     void Initialize() override;
     void Execute() override;

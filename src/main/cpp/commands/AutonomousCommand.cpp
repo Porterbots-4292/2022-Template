@@ -14,7 +14,7 @@
 
 #include "commands/AutonomousCommand.h"
 
-AutonomousCommand::AutonomousCommand(){
+AutonomousCommand::AutonomousCommand(Drivetrain& drivetrain) : m_drivetrain(&drivetrain) {
 
     // Use AddRequirements() here to declare subsystem dependencies
     // eg. AddRequirements(m_Subsystem);

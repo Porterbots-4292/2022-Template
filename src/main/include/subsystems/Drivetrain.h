@@ -32,33 +32,39 @@ private:
 
     WPI_VictorSPX m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID};
     WPI_VictorSPX m_leftRearController{Porterbots::CAN_ID::kMotorLeftRearID};
+    frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController, m_leftRearController};
 
     WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
     WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
-
-    frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController, m_leftRearController};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
 
-    frc::DifferentialDrive m_differentialDrive{m_leftFrontController, m_rightFrontController};
-
-    // used to block operator input during command execution
-    bool    m_supressManualControl = false;
+    frc::DifferentialDrive m_robotDrive{m_leftFrontController, m_rightFrontController};
 
     // line sensors live here since they are integral to the drive system and only used by the drive system
     frc::DigitalInput m_rightLineSensor{Porterbots::LineDetection::kRightLineSensor};
     frc::DigitalInput m_leftLineSensor{Porterbots::LineDetection::kLeftLineSensor};
 
+    bool    m_lineAlignCompleted;
 
 public:
     Drivetrain();
 
-    void DrivetrainTankMove(double, double, bool);
-    void DrivetrainArcadeMove(double, double, bool);
+    // a few different types of drive mode
+    //
+    // tank and arcade are very specific drive modes in regards to the joystick operations
+    //
+    // the "Drive" routine can wrap either mode allow us to switch the drive mode of the robot
+    // from tank to arcade mode if we liike and leave all of the operator interaction code using
+    // usintg the "Drive" routine
+    //
+    // some of the command-controlled drive operations might be easier o handle using one drive
+    // mode or the other so they would likely call the mode they prefer directly
+    void Drive(double input1, double input2);
+    void TankDrive(double left, double right);
+    void ArcadeDrive(double speed, double turn);
 
+    // returns an indication from a specific sensor for line detection
     bool IsLineDetected(int sensor);
-
-    void SetAllowOperatorCommands(bool);
-    bool GetAllowOperatorCommands();
 
     void Periodic() override;
     void SimulationPeriodic() override;

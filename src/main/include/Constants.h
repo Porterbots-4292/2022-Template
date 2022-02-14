@@ -19,7 +19,6 @@ namespace   Porterbots {
         int const     kMotorRightRearID  = 11;
         int const     kMotorLeftFrontID  = 12;
         int const     kMotorLeftRearID   = 13;
-
     }
 
     namespace Drivetrain {
@@ -29,9 +28,15 @@ namespace   Porterbots {
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
     
-        bool const      kOperatorCommand = false;               // used to distinguish operator from automated control
-        bool const      kAutoCommand     = true;                // when we start autonomous command sequences (whenever they start)
-                                                                // we want to suppress any operator robot movement commands
+        // this value is used to "dampen" the control inputs.
+        //
+        // we raise the vale of the joystick to this power to implement an exponential curve
+        // to the joystick response - this gives us a lot more low end control because using a
+        // square vakue of 2 means that .5 (half joystick) is really .25 while a full value of 1
+        // is 1 (full speed)
+        //
+        // we can disable "input squaring" by specifying a value of 1.0
+        double const       kDriveInputSquareValue = 2.0;   
     }
 
     namespace Controller {
@@ -47,6 +52,10 @@ namespace   Porterbots {
         int const       kRightLineSensor     = 1;
 
         // speed used for line detection and alignment moves
+        //
+        // want to be careful here - we don't want to go so fast that we overshoot things and
+        // have to re-align for that reason but we don't want to take forever to line up either
+        // so we'll probably end up working up some emperical value that works OK based on our testing
         double const    kLineAlignSpeed = 0.2;
 }
 
