@@ -40,8 +40,8 @@ namespace   Porterbots {
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
 
-        // see Drivetrain code for more details on this constant
-        double const       kDriveInputSquareValue = 2.0;   
+        // reduce the low speed sensitivity
+        bool const       kDriveSquareInputs = true;   
 
     }
 

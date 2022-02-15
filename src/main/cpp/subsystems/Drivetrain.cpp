@@ -14,20 +14,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 
-Drivetrain::Drivetrain()
-
-#ifdef  NEVER
-    // this is where the CAN ID and motor type parameters are set for the REV SparkMax controllers
-    //
-    // this happens in the Drivetrain constructor so we have to be a little tricky about we get
-    // the syntax right - note that the next line starts with a colon and then proceeds to initialize
-    // the sparkmax controllers
-    //
-    // the { at the start of the function follows the conditional code
-    : m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID, rev::CANSparkMax::MotorType::kBrushless},
-      m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID, rev::CANSparkMax::MotorType::kBrushless}
-#endif  // SPARKMAX{
-    {
+Drivetrain::Drivetrain() {
 
     // this sets up a bunch of stats to display on the LiveWindow
     //
@@ -93,39 +80,22 @@ void Drivetrain::Drive(double input1, double input2) {
     // square vakue of 2 means that .5 (half joystick) is really .25 while a full value of 1
     // is 1 (full speed)
     //
-    // we can disable "input squaring" by specifying a value of 1.0 for kDriveInputSquareValue
+    // we can disable "input squaring" by specifying a value of false0 for kDriveSquareInput
     // in Constants.h
-    //
-    // note that we need to save the sign of the inputs and reapply it after squaring if we
-    // are squaring it - otherwise we can leave it alone
-    //
-    // the code checking the value of kDriveInputSquareValue coe just make things robust in case
-    // we decide to get rid of squaring - we want to make sure we leave the sign alone if
-    // we're not squaring
+  
+    
 
-    int signInput1 = 1;
-    int signInput2 = 1;
-
-    if (input1 < 0 && Porterbots::Drivetrain::kDriveInputSquareValue != 1.0) {
-        signInput1 = -1;
-    }
-
-    if (input2 < 0 && Porterbots::Drivetrain::kDriveInputSquareValue != 1.0) {
-        signInput2 = -1;
-    }
-
-    m_robotDrive.ArcadeDrive(signInput1 * pow(input1, Porterbots::Drivetrain::kDriveInputSquareValue),
-                             signInput2 * pow(input2, Porterbots::Drivetrain::kDriveInputSquareValue));
+    m_robotDrive.ArcadeDrive(input1, input2, Porterbots::Drivetrain::kDriveSquareInputs);
 }
 
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed) {
 
-    m_robotDrive.TankDrive(leftSpeed, rightSpeed);
+    m_robotDrive.TankDrive(leftSpeed, rightSpeed, Porterbots::Drivetrain::kDriveSquareInputs);
 }
 
 void Drivetrain::ArcadeDrive(double speed, double turn) {
 
-    m_robotDrive.ArcadeDrive(speed, turn);
+    m_robotDrive.ArcadeDrive(speed, turn, Porterbots::Drivetrain::kDriveSquareInputs);
 }
 
 void Drivetrain::Periodic() {
