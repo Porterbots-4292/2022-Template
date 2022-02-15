@@ -16,7 +16,11 @@
 // SparkMAX conttrollers and it'd be nice to be able to test some things remotely
 //
 // be sure comment out the next line for a normal Porterbots build (that should be the default)
-//#define     SPARKMAX
+//
+// this also impacts some other robot aspects like turning down the max speed and the speed
+// the line alignment code uses to prevent potentially loose motors on the test rig from
+// twisting around all over the place 
+#define     SPARKMAX
 
 
 namespace   Porterbots {
@@ -34,8 +38,11 @@ namespace   Porterbots {
     }
 
     namespace Drivetrain {
-
+#ifndef SPARKMAX
         double const    kMaxOutput      = 1.0;
+#else   // SPARKMAX
+        double const    kMaxOutput      = 0.1;
+#endif   // SPARKMAX
 
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
@@ -62,7 +69,11 @@ namespace   Porterbots {
         // want to be careful here - we don't want to go so fast that we overshoot things and
         // have to re-align for that reason but we don't want to take forever to line up either
         // so we'll probably end up working up some emperical value that works OK based on our testing
+#ifndef SPARKMAX
         double const    kLineAlignSpeed = 0.2;
+#else // SPARKMAX
+        double const    kLineAlignSpeed = 0.05;
+#endif
 }
 
 
