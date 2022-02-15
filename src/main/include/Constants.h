@@ -16,7 +16,7 @@
 // SparkMAX conttrollers and it'd be nice to be able to test some things remotely
 //
 // be sure comment out the next line for a normal Porterbots build (that should be the default)
-#define     SPARKMAX
+//#define     SPARKMAX
 
 
 namespace   Porterbots {
