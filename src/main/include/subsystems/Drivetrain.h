@@ -16,9 +16,14 @@
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/DigitalInput.h>
 
-#include <ctre/phoenix.h>
-
 #include "Constants.h"
+
+#ifndef SPARKMAX
+#include <ctre/phoenix.h>
+#else   // SPARKMAX
+#include <rev/CANSparkMax.h>
+#endif  // SPARKMAX
+
 
 /**
  *
@@ -30,6 +35,7 @@ private:
     // It's desirable that everything possible is private except
     // for methods that implement subsystem capabilities
 
+#ifndef SPARKMAX        //normal Porterbots build does not have this defined
     WPI_VictorSPX m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID};
     WPI_VictorSPX m_leftRearController{Porterbots::CAN_ID::kMotorLeftRearID};
     frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController, m_leftRearController};
@@ -37,6 +43,15 @@ private:
     WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
     WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
+#else   // SPARKMAX
+// only using 2 SparkMAX controllers but we'll end up with the same motor controllers
+// defined so the code will all be the same (pretty much)
+    rev::CANSparkMax m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID, rev::CANSparkMax::MotorType::kBrushless};
+    frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController};
+
+    rev::CANSparkMax m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID, rev::CANSparkMax::MotorType::kBrushless};
+    frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController};   
+#endif  // SPARKMAX
 
     frc::DifferentialDrive m_robotDrive{m_leftFrontController, m_rightFrontController};
 

@@ -14,7 +14,20 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 
-Drivetrain::Drivetrain(){
+Drivetrain::Drivetrain()
+
+#ifdef  NEVER
+    // this is where the CAN ID and motor type parameters are set for the REV SparkMax controllers
+    //
+    // this happens in the Drivetrain constructor so we have to be a little tricky about we get
+    // the syntax right - note that the next line starts with a colon and then proceeds to initialize
+    // the sparkmax controllers
+    //
+    // the { at the start of the function follows the conditional code
+    : m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID, rev::CANSparkMax::MotorType::kBrushless},
+      m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID, rev::CANSparkMax::MotorType::kBrushless}
+#endif  // SPARKMAX{
+    {
 
     // this sets up a bunch of stats to display on the LiveWindow
     //
@@ -22,10 +35,12 @@ Drivetrain::Drivetrain(){
     // but for robot development and debugging, it can be very useful to see
     // specific components on the robot are actually doing
     SetName("Drivetrain");
+#ifndef SPARKMAX
     AddChild("Front_Left Motor", &m_leftFrontController);
     AddChild("Rear Left Motor", &m_leftRearController);
     AddChild("Front Right Motor", &m_rightFrontController);
     AddChild("Rear Right Motor", &m_rightRearController);
+#endif // ! SPARKMAX
 
     SetSubsystem("Diff Drive");
     AddChild("Diff Drive", &m_robotDrive);

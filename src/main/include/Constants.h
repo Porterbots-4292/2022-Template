@@ -7,6 +7,18 @@
 #pragma once
 
 
+// enable this define to build for the REV Robotics SparkMAX motor controllers
+//
+// if SPARKMAX is not defined, the code will build for
+// Cross the Road Electronics VictorSPX motor controllers
+//
+// this is because mr herzog doesn't have any VictorSpx controllers on hand but has some
+// SparkMAX conttrollers and it'd be nice to be able to test some things remotely
+//
+// be sure comment out the next line for a normal Porterbots build (that should be the default)
+#define     SPARKMAX
+
+
 namespace   Porterbots {
 // All CAN IDs are captured here
 //
