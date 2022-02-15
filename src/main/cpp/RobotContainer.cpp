@@ -43,8 +43,8 @@ RobotContainer::RobotContainer()
     // drivetrain - this is how command sequences that need to "drive" the robot do the
     // actual driving without the driver interfering with the command
 
-    m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return m_xboxDriveController.GetLeftY(); },
-                                         [this] { return m_xboxDriveController.GetRightY(); },
+    m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
+                                         [this] { return m_xboxDriveController.GetRightX(); },
                                          m_drivetrain));
 }
 
@@ -57,7 +57,8 @@ RobotContainer* RobotContainer::GetInstance() {
 
 void RobotContainer::ConfigureButtonBindings() {
 
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenPressed(LineAlignCommand(m_drivetrain));
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenPressed(
+                                                 LineAlignCommand(m_drivetrain));
     //frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(LineAlignCommand(m_drivetrain));
 }
 
