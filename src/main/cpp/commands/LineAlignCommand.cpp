@@ -31,8 +31,6 @@ LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
 // Called just before this Command runs the first time
 void LineAlignCommand::Initialize() {
 
-    std::cout << "LineAlignCommand: Initialize\n";
-
     m_lineAlignCompleted = false;
 
     // start moving ahead at our predefined speed to search for the alignment line
