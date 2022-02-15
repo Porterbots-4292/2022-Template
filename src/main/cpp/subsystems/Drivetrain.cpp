@@ -61,6 +61,18 @@ Drivetrain::Drivetrain() {
     // needs changing - this isn't a bad idea either
     m_leftSideMotors.SetInverted(false);
     m_rightSideMotors.SetInverted(true);
+
+    std::cout << "left side motors inverted = " << m_leftSideMotors.GetInverted() << "   right side motors inverted = " << m_rightSideMotors.GetInverted() << std::endl;
+
+#ifdef SPARKMAX
+    std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl;
+
+    m_leftFrontController.SetInverted(false);
+    m_rightFrontController.SetInverted(true);
+
+    std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl; 
+    
+#endif// SPARKMAX
 }
 
 void Drivetrain::Drive(double input1, double input2) {
@@ -75,12 +87,12 @@ void Drivetrain::Drive(double input1, double input2) {
     //
     // as to why we're squaring the drive input, it's for smoother control at slow speeds
     //
-    // we raise the value of the joystick to this power to implement an exponential curve
-    // to the joystick response - this gives us a lot more fine low end control because using a
-    // square vakue of 2 means that .5 (half joystick) is really .25 while a full value of 1
-    // is 1 (full speed)
+    // the library squares the input to implement an exponential curve
+    // to the joystick response - this gives us a lot more fine low end control because using
+    // squaring means that .5 (half joystick) is treated as .25 while a full value of 1.0
+    // is still 1.0 (full speed)
     //
-    // we can disable "input squaring" by specifying a value of false0 for kDriveSquareInput
+    // we can disable "input squaring" by specifying a value of false for kDriveSquareInput
     // in Constants.h
   
     
