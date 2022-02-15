@@ -77,7 +77,7 @@ Drivetrain::Drivetrain() {
 #endif// ZOGBOT
 }
 
-void Drivetrain::Drive(double input1, double input2) {
+void Drivetrain::Drive(double input1, double input2, bool square) {
     
     // our default "Drive" routine is Arcade for now but we can change it here if we like
     //
@@ -95,21 +95,19 @@ void Drivetrain::Drive(double input1, double input2) {
     // is still 1.0 (full speed)
     //
     // we can disable "input squaring" by specifying a value of false for kDriveSquareInput
-    // in Constants.h
-  
-    
+    // in Constants.h    
 
-    m_robotDrive.ArcadeDrive(input1, input2, Porterbots::Drivetrain::kDriveSquareInputs);
+    m_robotDrive.ArcadeDrive(input1, input2, square);
 }
 
-void Drivetrain::TankDrive(double leftSpeed, double rightSpeed) {
+void Drivetrain::TankDrive(double leftSpeed, double rightSpeed, bool square) {
 
-    m_robotDrive.TankDrive(leftSpeed, rightSpeed, Porterbots::Drivetrain::kDriveSquareInputs);
+    m_robotDrive.TankDrive(leftSpeed, rightSpeed, square);
 }
 
-void Drivetrain::ArcadeDrive(double speed, double turn) {
+void Drivetrain::ArcadeDrive(double speed, double turn, bool square) {
 
-    m_robotDrive.ArcadeDrive(speed, turn, Porterbots::Drivetrain::kDriveSquareInputs);
+    m_robotDrive.ArcadeDrive(speed, turn, square);
 }
 
 void Drivetrain::Periodic() {
@@ -154,7 +152,7 @@ bool Drivetrain::IsLineDetected(int sensor) {
 
     // we invert the return from the sensor because for us, a "true" indicates
     // the line was found
-    return ( ! sensorReading);
+    return (sensorReading);
 }
 
 

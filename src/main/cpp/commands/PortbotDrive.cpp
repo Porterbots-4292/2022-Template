@@ -12,7 +12,7 @@ PorterbotDrive::PorterbotDrive(std::function<double()> in1,
 }
 
 void PorterbotDrive::Execute() {
-  m_drivetrain->Drive(m_input1(), m_input2());
+  m_drivetrain->Drive(m_input1(), m_input2(), Porterbots::Drivetrain::kDriveSquareInputs);
 }
 
 // we're never finished as we're the default command
@@ -22,5 +22,5 @@ bool PorterbotDrive::IsFinished() {
 
 // Called once after isFinished returns true - which will never actually happen
 void PorterbotDrive::End(bool) {
-  m_drivetrain->Drive(0, 0);
+  m_drivetrain->Drive(0, 0, false);
 }

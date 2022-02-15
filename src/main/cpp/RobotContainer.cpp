@@ -57,6 +57,8 @@ RobotContainer* RobotContainer::GetInstance() {
 
 void RobotContainer::ConfigureButtonBindings() {
 
+    std::cout << "ConfigureButton Settings - button " << (int)frc::XboxController::Button::kA << std::endl;
+    
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenPressed(
                                                  LineAlignCommand(m_drivetrain));
     //frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(LineAlignCommand(m_drivetrain));

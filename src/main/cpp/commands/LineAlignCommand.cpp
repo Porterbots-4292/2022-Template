@@ -24,20 +24,35 @@ LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
     AddRequirements({m_drivetrain});
 
     SetName("LineAlign");
+
+    std::cout << "LineAlignCommand: Constructed\n";
 }
 
 // Called just before this Command runs the first time
 void LineAlignCommand::Initialize() {
 
+    std::cout << "LineAlignCommand: Initialize\n";
+
     m_lineAlignCompleted = false;
 
     // start moving ahead at our predefined speed to search for the alignment line
+    //
+    // do not swqare the input
     m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
-                            Porterbots::LineDetection::kLineAlignSpeed);
+                            Porterbots::LineDetection::kLineAlignSpeed,
+                            false);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void LineAlignCommand::Execute() {
+
+    // first off - hit the motorcontroller so we don't get a timeout
+    //
+    // we shoudl be moving at this speed anyway so it won't really change the robot
+    // speed but it will hit the drivetrain safety timeout
+    m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
+                            Porterbots::LineDetection::kLineAlignSpeed,
+                            false);
 
     // as a safety check, if for any reason line align is completed and we still
     // got called, don't do anything else except for stopping the robot because
@@ -51,9 +66,9 @@ void LineAlignCommand::Execute() {
     // Execute() function has been run
     //
     // doing this here and now could save us a robot crash or some twisty debugging later...
-    
+
     if (m_lineAlignCompleted) {
-        m_drivetrain->TankDrive(0.0, 0.0);
+        m_drivetrain->TankDrive(0.0, 0.0, false);
 
         return;
     }
@@ -74,7 +89,7 @@ void LineAlignCommand::Execute() {
 
         // found a line so for now just stop the robot and set the finished flag
 
-        m_drivetrain->TankDrive(0.0, 0.0);
+        m_drivetrain->TankDrive(0.0, 0.0, false);
 
         m_lineAlignCompleted = true;
     }
@@ -117,7 +132,7 @@ void LineAlignCommand::End(bool interrupted) {
     // in this case, we'll make sure we explicitely stop the robot
 
     if (interrupted) {
-        m_drivetrain->TankDrive(0.0, 0.0);
+        m_drivetrain->TankDrive(0.0, 0.0, false);
     }
 }
 

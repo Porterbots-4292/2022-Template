@@ -80,7 +80,7 @@ namespace   Porterbots {
 #ifndef ZOGBOT
         double const    kLineAlignSpeed = 0.2;
 #else // ZOGBOT
-        double const    kLineAlignSpeed = 0.05;
+        double const    kLineAlignSpeed = 0.5;
 #endif  // ZOGBOT
 }
 
