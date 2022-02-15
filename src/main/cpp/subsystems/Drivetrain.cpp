@@ -27,7 +27,7 @@ Drivetrain::Drivetrain(){
     AddChild("Front Right Motor", &m_rightFrontController);
     AddChild("Rear Right Motor", &m_rightRearController);
 
-    SetSubsystem("Drivetrain");
+    SetSubsystem("Diff Drive");
     AddChild("Diff Drive", &m_robotDrive);
 
     SetSubsystem("Line Sensors");
@@ -62,20 +62,45 @@ Drivetrain::Drivetrain(){
 }
 
 void Drivetrain::Drive(double input1, double input2) {
-
+    
     // our default "Drive" routine is Arcade for now but we can change it here if we like
     //
-    // this is where the human driver input shoudl go through
+    // this is where the human driver input should go through
     //
     // we can also call the explicit routines to intermingle Arcade and Tank when we want one or
     // the other - could be handy for some command sequences to think about it in one of those ways
     // over the other
     //
-    // as to why we're raising the drive input to a power, it's for smoother control,
-    // see "Constants.h" for details
+    // as to why we're squaring the drive input, it's for smoother control at slow speeds
+    //
+    // we raise the value of the joystick to this power to implement an exponential curve
+    // to the joystick response - this gives us a lot more fine low end control because using a
+    // square vakue of 2 means that .5 (half joystick) is really .25 while a full value of 1
+    // is 1 (full speed)
+    //
+    // we can disable "input squaring" by specifying a value of 1.0 for kDriveInputSquareValue
+    // in Constants.h
+    //
+    // note that we need to save the sign of the inputs and reapply it after squaring if we
+    // are squaring it - otherwise we can leave it alone
+    //
+    // the code checking the value of kDriveInputSquareValue coe just make things robust in case
+    // we decide to get rid of squaring - we want to make sure we leave the sign alone if
+    // we're not squaring
 
-    m_robotDrive.ArcadeDrive(pow(input1, Porterbots::Drivetrain::kDriveInputSquareValue),
-                             pow(input2, Porterbots::Drivetrain::kDriveInputSquareValue));
+    int signInput1 = 1;
+    int signInput2 = 1;
+
+    if (input1 < 0 && Porterbots::Drivetrain::kDriveInputSquareValue != 1.0) {
+        signInput1 = -1;
+    }
+
+    if (input2 < 0 && Porterbots::Drivetrain::kDriveInputSquareValue != 1.0) {
+        signInput2 = -1;
+    }
+
+    m_robotDrive.ArcadeDrive(signInput1 * pow(input1, Porterbots::Drivetrain::kDriveInputSquareValue),
+                             signInput2 * pow(input2, Porterbots::Drivetrain::kDriveInputSquareValue));
 }
 
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed) {

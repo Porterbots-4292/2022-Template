@@ -27,16 +27,10 @@ namespace   Porterbots {
 
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
-    
-        // this value is used to "dampen" the control inputs.
-        //
-        // we raise the vale of the joystick to this power to implement an exponential curve
-        // to the joystick response - this gives us a lot more low end control because using a
-        // square vakue of 2 means that .5 (half joystick) is really .25 while a full value of 1
-        // is 1 (full speed)
-        //
-        // we can disable "input squaring" by specifying a value of 1.0
+
+        // see Drivetrain code for more details on this constant
         double const       kDriveInputSquareValue = 2.0;   
+
     }
 
     namespace Controller {
