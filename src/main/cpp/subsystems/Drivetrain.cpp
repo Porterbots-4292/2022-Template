@@ -22,12 +22,12 @@ Drivetrain::Drivetrain() {
     // but for robot development and debugging, it can be very useful to see
     // specific components on the robot are actually doing
     SetName("Drivetrain");
-#ifndef SPARKMAX
+#ifndef ZOGBOT
     AddChild("Front_Left Motor", &m_leftFrontController);
     AddChild("Rear Left Motor", &m_leftRearController);
     AddChild("Front Right Motor", &m_rightFrontController);
     AddChild("Rear Right Motor", &m_rightRearController);
-#endif // ! SPARKMAX
+#endif // ! ZOGBOT
 
     SetSubsystem("Diff Drive");
     AddChild("Diff Drive", &m_robotDrive);
@@ -61,18 +61,20 @@ Drivetrain::Drivetrain() {
     // needs changing - this isn't a bad idea either
     m_leftSideMotors.SetInverted(false);
     m_rightSideMotors.SetInverted(true);
-
+    
     std::cout << "left side motors inverted = " << m_leftSideMotors.GetInverted() << "   right side motors inverted = " << m_rightSideMotors.GetInverted() << std::endl;
 
-#ifdef SPARKMAX
+#ifdef ZOGBOT
     std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl;
 
+    // seems the SparkMAX controllers don't inherit SetInverted() from the
+    // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
     m_rightFrontController.SetInverted(true);
 
     std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl; 
     
-#endif// SPARKMAX
+#endif// ZOGBOT
 }
 
 void Drivetrain::Drive(double input1, double input2) {

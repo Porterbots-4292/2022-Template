@@ -9,20 +9,26 @@
 #pragma once
 
 
-// enable this define to build for the REV Robotics SparkMAX motor controllers
+// enable this define to build vary the build for mr herzog's
+// test righ that uses soem slightly different hardware including fewer drive motors
+// as well as the REV Robotics ZOGBOT motor controllers
 //
-// if SPARKMAX is not defined, the code will build for
-// Cross the Road Electronics VictorSPX motor controllers
-//
-// this is because mr herzog doesn't have any VictorSpx controllers on hand but has some
-// SparkMAX conttrollers and it'd be nice to be able to test some things remotely
+// if ZOGBOT is not defined, the code will build for the Porterbots' configuration
+// using Cross the Road Electronics VictorSPX motor controllers and a pair of motors on each side
 //
 // be sure comment out the next line for a normal Porterbots build (that should be the default)
 //
 // this also impacts some other robot aspects like turning down the max speed and the speed
 // the line alignment code uses to prevent potentially loose motors on the test rig from
 // twisting around all over the place 
-#define     SPARKMAX
+//
+// this is a good example of how we can have a single code base with a few variations in it
+// to accomodate different testing environments
+//
+// the bulk of the code base is totally the same with just a few small differences in the hardware being
+// used - we can accomodate the hardware differences and since these differences get wrapped by the higher
+// level WPILib functions, the higher level code is unchanged
+#define     ZOGBOT
 
 
 namespace   Porterbots {
@@ -40,11 +46,11 @@ namespace   Porterbots {
     }
 
     namespace Drivetrain {
-#ifndef SPARKMAX
+#ifndef ZOGBOT
         double const    kMaxOutput      = 1.0;
-#else   // SPARKMAX
+#else   // ZOGBOT
         double const    kMaxOutput      = 0.1;
-#endif   // SPARKMAX
+#endif   // ZOGBOT
 
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
@@ -71,11 +77,11 @@ namespace   Porterbots {
         // want to be careful here - we don't want to go so fast that we overshoot things and
         // have to re-align for that reason but we don't want to take forever to line up either
         // so we'll probably end up working up some emperical value that works OK based on our testing
-#ifndef SPARKMAX
+#ifndef ZOGBOT
         double const    kLineAlignSpeed = 0.2;
-#else // SPARKMAX
+#else // ZOGBOT
         double const    kLineAlignSpeed = 0.05;
-#endif
+#endif  // ZOGBOT
 }
 
 
