@@ -42,7 +42,7 @@ private:
 
     // controllers
     frc::XboxController m_xboxDriveController{Porterbots::Controller::kDriveController};
-    frc::XboxController m_xboxMechanismController{Porterbots::Controller::kMechanismController};
+    //frc::XboxController m_xboxMechanismController{Porterbots::Controller::kMechanismController};
 
     // subsystems
     Drivetrain   m_drivetrain;
