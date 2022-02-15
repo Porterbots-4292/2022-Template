@@ -62,18 +62,12 @@ Drivetrain::Drivetrain() {
     m_leftSideMotors.SetInverted(false);
     m_rightSideMotors.SetInverted(true);
     
-    std::cout << "left side motors inverted = " << m_leftSideMotors.GetInverted() << "   right side motors inverted = " << m_rightSideMotors.GetInverted() << std::endl;
-
 #ifdef ZOGBOT
-    std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl;
 
     // seems the SparkMAX controllers don't inherit SetInverted() from the
     // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
-    m_rightFrontController.SetInverted(true);
-
-    std::cout << "SparkMAX left motor inverted = " << m_leftFrontController.GetInverted() << "   right motor inverted = " << m_rightFrontController.GetInverted() << std::endl; 
-    
+    m_rightFrontController.SetInverted(true);   
 #endif// ZOGBOT
 }
 
