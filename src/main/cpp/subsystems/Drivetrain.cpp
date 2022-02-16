@@ -49,14 +49,22 @@ Drivetrain::Drivetrain() {
     //
     // some folks go as far as doing a factory reset in the code and then changing *ONLY* what
     // needs changing - this isn't a bad idea either
-    m_leftSideMotors.SetInverted(false);
-    m_rightSideMotors.SetInverted(true);
+    //m_leftSideMotors.SetInverted(false);
+    //m_rightSideMotors.SetInverted(true);
+
+    
     
 #ifdef ZOGBOT
     // seems the SparkMAX controllers don't inherit SetInverted() from the
     // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
-    m_rightFrontController.SetInverted(true);   
+    m_rightFrontController.SetInverted(true); 
+#else
+    m_leftFrontController.SetInverted(false);
+    m_leftRearController.SetInverted(false);
+    m_rightFrontController.SetInverted(true);
+    m_rightRearController.SetInverted(true);
+
 #endif// ZOGBOT
 }
 
