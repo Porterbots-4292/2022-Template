@@ -1,4 +1,4 @@
-# zogbot
+# 2022-Template
  Template Command-based Robot to start off the 2022 robot code with - it's not the robot but a place to put the code to operate the robot.
  
  ## Subsystems
