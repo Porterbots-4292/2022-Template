@@ -50,7 +50,7 @@ void LineAlignCommand::Execute() {
     // Execute() function has been run
     //
     // doing this here and now could save us a robot crash or some twisty debugging later...
-    std::cout << "We running";
+    
     if (m_lineAlignCompleted) {
         m_drivetrain->TankDrive(0.0, 0.0, false);
 
