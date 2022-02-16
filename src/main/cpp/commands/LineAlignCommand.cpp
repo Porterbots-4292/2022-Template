@@ -24,8 +24,6 @@ LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
     AddRequirements({m_drivetrain});
 
     SetName("LineAlign");
-
-    std::cout << "LineAlignCommand: Constructed\n";
 }
 
 // Called just before this Command runs the first time
@@ -118,8 +116,6 @@ bool LineAlignCommand::IsFinished() {
 // if we got cancelled, the bool flag pssed will be true, otherwise if we stopped
 // ourselves (by IsFinished returning true) the flag will be false
 void LineAlignCommand::End(bool interrupted) {
-
-    std::cout << "LineAlignCommand::End - " << interrupted << std::endl;
 
     // even though we didn't find the line - just set our flag like we're done
     //
