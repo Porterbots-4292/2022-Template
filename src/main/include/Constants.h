@@ -51,7 +51,7 @@ namespace   Porterbots {
 #else   // ZOGBOT
         double const    kMaxOutput      = 0.1;
 #endif   // ZOGBOT
-
+        // for safety
         bool const      kSafetyEnabled  = true;
         constexpr auto  kExpirationTime = 0.1_s;
 
