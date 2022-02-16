@@ -82,7 +82,6 @@ namespace   Porterbots {
 #else // ZOGBOT
         double const    kLineAlignSpeed = 0.5;
 #endif  // ZOGBOT
-}
-
+    }
 
 }
