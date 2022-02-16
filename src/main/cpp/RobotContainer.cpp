@@ -45,13 +45,11 @@ RobotContainer* RobotContainer::GetInstance() {
     return(m_robotContainer);
 }
 
-void RobotContainer::ConfigureButtonBindings() {
-
-    std::cout << "ConfigureButton Settings - button " << (int)frc::XboxController::Button::kA << std::endl;
-    
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenPressed(
-                                                 LineAlignCommand(m_drivetrain));
-    //frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(LineAlignCommand(m_drivetrain));
+void RobotContainer::ConfigureButtonBindings() {  
+    // while the "A" button is held, run the line alignment command
+    //
+    // it will stop when the button is released or when it completes (after aligning hopefully)
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(m_lineAlignCommand);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

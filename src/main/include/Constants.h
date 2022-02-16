@@ -28,7 +28,7 @@
 // the bulk of the code base is totally the same with just a few small differences in the hardware being
 // used - we can accomodate the hardware differences and since these differences get wrapped by the higher
 // level WPILib functions, the higher level code is unchanged
-#define     ZOGBOT
+//#define     ZOGBOT
 
 
 namespace   Porterbots {
