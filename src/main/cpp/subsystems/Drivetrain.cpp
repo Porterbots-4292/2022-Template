@@ -57,6 +57,16 @@ Drivetrain::Drivetrain() {
     // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
     m_rightFrontController.SetInverted(true);   
+#else   // ZOGBOT
+    // the Victor SPX controllers seem to suffer from the same issue which make me think
+    // it's an issue not in the SparkMAXes (or the Victor SPX) controllers but an issue with
+    // WPILib MotorController groups
+    //
+    // we work around it by just setting them here
+    m_leftFrontController.SetInverted(false);
+    m_leftRearController.SetInverted(false);
+    m_rightFrontController.SetInverted(true);   
+    m_rightRearController.SetInverted(true);   
 #endif// ZOGBOT
 
     setDriveMode(Porterbots::Drivetrain::kDriveModeDefault);
