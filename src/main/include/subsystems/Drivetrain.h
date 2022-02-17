@@ -52,6 +52,8 @@ private:
 
     bool    m_lineAlignCompleted;
 
+    void    setDriveMode(int);
+
 public:
     Drivetrain();
 

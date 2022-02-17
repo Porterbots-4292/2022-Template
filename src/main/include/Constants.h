@@ -47,17 +47,21 @@ namespace   Porterbots {
 
     namespace Drivetrain {
 #ifndef ZOGBOT
-        double const    kMaxOutput      = 1.0;
+        double const    kMaxOutput         = 1.0;
 #else   // ZOGBOT
-        double const    kMaxOutput      = 0.1;
+        double const    kMaxOutput         = 0.1;
 #endif   // ZOGBOT
 
-        bool const      kSafetyEnabled  = true;
-        constexpr auto  kExpirationTime = 0.1_s;
+        bool const      kSafetyEnabled     = true;
+        constexpr auto  kExpirationTime    = 0.1_s;
 
         // reduce the low speed sensitivity
-        bool const       kDriveSquareInputs = true;   
+        bool const      kDriveSquareInputs = true;
 
+        // brake or coast to a stop - kDriveModeDefault is used by the mode setting routine in Drivetrain.cpp
+        int const       kDriveModeCoast    = 0;
+        int const       kDriveModeBrake    = 1;
+        int const       kDriveModeDefault  = kDriveModeBrake;
     }
 
     namespace Controller {

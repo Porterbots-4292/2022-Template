@@ -58,6 +58,8 @@ Drivetrain::Drivetrain() {
     m_leftFrontController.SetInverted(false);
     m_rightFrontController.SetInverted(true);   
 #endif// ZOGBOT
+
+    setDriveMode(Porterbots::Drivetrain::kDriveModeDefault);
 }
 
 void Drivetrain::Drive(double input1, double input2, bool square) {
@@ -136,4 +138,62 @@ bool Drivetrain::IsLineDetected(int sensor) {
     // we invert the return from the sensor because for us, a "true" indicates
     // the line was found
     return (sensorReading);
+}
+
+// coasting or braking control
+void Drivetrain::setDriveMode(int porterbotMode) {
+
+#ifdef  ZOGBOT
+    rev::REVLibError retCode;
+#endif  // ZOGBOT
+
+    // validate the mode requested and set the specific controllers to the corresponding
+    // mode using controller-specific calls and constants
+    switch (porterbotMode) {
+
+        case Porterbots::Drivetrain::kDriveModeCoast:
+#ifndef ZOGBOT
+            m_leftFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
+            m_leftRearController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
+            m_rightFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
+            m_rightFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Coast);
+#else   // ZOGBOT
+            retCode = m_leftFrontController.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
+            if (retCode != rev::REVLibError::kOk) {
+                std::cout << "Error setting coast mode for leftFront controller - got " << (int)retCode << std::endl;
+            }
+
+            retCode = m_rightFrontController.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
+            if (retCode != rev::REVLibError::kOk) {
+                std::cout << "Error setting coast mode for rightFront controller - got " << (int)retCode << std::endl;
+            }
+#endif  // ZOGBOT
+            break;
+
+        case Porterbots::Drivetrain::kDriveModeBrake:
+#ifndef ZOGBOT
+            m_leftFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+            m_leftRearController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+            m_rightFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+            m_rightFrontController.SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+#else   // ZOGBOT
+            retCode = m_leftFrontController.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            if (retCode != rev::REVLibError::kOk) {
+                std::cout << "Error setting brake mode for leftFront controller - got " << (int)retCode << std::endl;
+            }
+
+            retCode = m_rightFrontController.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+            if (retCode != rev::REVLibError::kOk) {
+                std::cout << "Error setting brake mode for rightFront controller - got " << (int)retCode << std::endl;
+            }
+#endif  // ZOGBOT
+            break;
+
+        default:
+            std::cout << "Drivetrain::setDriveMode(" << porterbotMode << ") - invalid drive mode!" << std::endl;
+    }
 }
