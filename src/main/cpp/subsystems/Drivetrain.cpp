@@ -30,6 +30,8 @@ Drivetrain::Drivetrain() {
     m_robotDrive.SetSafetyEnabled(Porterbots::Drivetrain::kSafetyEnabled);
     m_robotDrive.SetExpiration(Porterbots::Drivetrain::kExpirationTime);
     m_robotDrive.SetMaxOutput(Porterbots::Drivetrain::kMaxOutput);
+
+    std::cout << "GetMaxOutput() = " << Porterbots::Drivetrain::kMaxOutput << std::endl;
  
     // SetInverted to true reverses the "normal" rotation direction of the associated motor
     // controller or controller group - typicaly this is because motors on different sides
@@ -49,21 +51,22 @@ Drivetrain::Drivetrain() {
     //
     // some folks go as far as doing a factory reset in the code and then changing *ONLY* what
     // needs changing - this isn't a bad idea either
+
     m_leftSideMotors.SetInverted(false);
     m_rightSideMotors.SetInverted(true);
     
-#ifdef ZOGBOT
-    // seems the SparkMAX controllers don't inherit SetInverted() from the
+    // seems the motor controllers don't inherit SetInverted() from the
     // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
-    m_rightFrontController.SetInverted(true);   
+    m_rightFrontController.SetInverted(true);
+#ifndef ZOGBOT
+    m_leftRearController.SetInverted(false);
+    m_rightRearController.SetInverted(true);
 #endif// ZOGBOT
 }
 
-void Drivetrain::Drive(double input1, double input2, bool square) {
+void Drivetrain::Drive(double input1, double input2, int driveMode, bool square) {
     
-    // our default "Drive" routine is Arcade for now but we can change it here if we like
-    //
     // this is where the human driver input should go through
     //
     // we can also call the explicit routines to intermingle Arcade and Tank when we want one or
@@ -80,7 +83,15 @@ void Drivetrain::Drive(double input1, double input2, bool square) {
     // we can disable "input squaring" by specifying a value of false for kDriveSquareInput
     // in Constants.h    
 
-    m_robotDrive.ArcadeDrive(input1, input2, square);
+    switch (driveMode) {
+        case Porterbots::Drivetrain::kDriveModeArcade:
+            m_robotDrive.ArcadeDrive(input1, input2, square);
+            break;
+
+        case Porterbots::Drivetrain::kDriveModeTank:
+            m_robotDrive.TankDrive(input1, input2, square);
+            break;
+    }
 }
 
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed, bool square) {
