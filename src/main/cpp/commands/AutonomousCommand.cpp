@@ -14,12 +14,12 @@ AutonomousCommand::AutonomousCommand(Drivetrain& drivetrain) : m_drivetrain(&dri
 
 // Called just before this Command runs the first time
 void AutonomousCommand::Initialize() {
-
+    m_drivetrain->TankDrive(0.05,0.05,false);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutonomousCommand::Execute() {
-
+    m_drivetrain->TankDrive(0.05,0.05,false);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -29,7 +29,7 @@ bool AutonomousCommand::IsFinished() {
 
 // Called once after isFinished returns true
 void AutonomousCommand::End(bool interrupted) {
-
+    m_drivetrain->TankDrive(0,0,false);
 }
 
 bool AutonomousCommand::RunsWhenDisabled() const {

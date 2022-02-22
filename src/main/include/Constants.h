@@ -47,7 +47,7 @@ namespace   Porterbots {
 
     namespace Drivetrain {
 #ifndef ZOGBOT
-        double const    kMaxOutput      = 1.0;
+        double const    kMaxOutput      = 0.2;
 #else   // ZOGBOT
         double const    kMaxOutput      = 0.1;
 #endif   // ZOGBOT
@@ -61,7 +61,6 @@ namespace   Porterbots {
     }
 
     namespace Controller {
-
         int const       kDriveController     = 0;
         int const       kMechanismController = 1;    
     }

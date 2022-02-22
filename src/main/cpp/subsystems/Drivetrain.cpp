@@ -12,6 +12,8 @@ Drivetrain::Drivetrain() {
     // but for robot development and debugging, it can be very useful to see
     // specific components on the robot are actually doing
     SetName("Drivetrain");
+
+    // FIGURE OUT WHAT ADDCHLD DOES
 #ifndef ZOGBOT
     AddChild("Front_Left Motor", &m_leftFrontController);
     AddChild("Rear Left Motor", &m_leftRearController);

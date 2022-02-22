@@ -77,7 +77,6 @@ void LineAlignCommand::Execute() {
 
         m_lineAlignCompleted = true;
     }
-
     // else we just let the robot crawl forward at the kLineAlignSpeed for now
 
     // we'll check sensors again the next time through this routine
