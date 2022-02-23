@@ -29,4 +29,9 @@ private:
     Drivetrain* m_drivetrain;
 
     bool        m_lineAlignCompleted;
+
+    enum State  { StateStopped, StateForward, StateTurningLeft, StateTurningRight};
+    State       m_state;
+
+    double      m_rightSpeed, m_leftSpeed;
 };

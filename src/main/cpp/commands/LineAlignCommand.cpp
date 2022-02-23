@@ -12,6 +12,8 @@ LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
     AddRequirements({m_drivetrain});
 
     SetName("LineAlign");
+
+    m_state = StateStopped;
 }
 
 // Called just before this Command runs the first time
@@ -19,9 +21,15 @@ void LineAlignCommand::Initialize() {
 
     m_lineAlignCompleted = false;
 
+    m_state              = StateForward;
+
+    m_rightSpeed         = Porterbots::LineDetection::kLineAlignSpeed;
+    m_leftSpeed          = Porterbots::LineDetection::kLineAlignSpeed;
+    
+
     // start moving ahead at our predefined speed to search for the alignment line
     //
-    // do not swqare the input
+    // do not square the input
     m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
                             Porterbots::LineDetection::kLineAlignSpeed,
                             false);
@@ -32,11 +40,9 @@ void LineAlignCommand::Execute() {
 
     // first off - hit the motorcontroller so we don't get a timeout
     //
-    // we shoudl be moving at this speed anyway so it won't really change the robot
+    // we should be moving at this speed anyway so it won't really change the robot
     // speed but it will hit the drivetrain safety timeout
-    m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
-                            Porterbots::LineDetection::kLineAlignSpeed,
-                            false);
+    m_drivetrain->TankDrive(m_leftSpeed, m_rightSpeed, false);
 
     // as a safety check, if for any reason line align is completed and we still
     // got called, don't do anything else except for stopping the robot because
@@ -56,19 +62,8 @@ void LineAlignCommand::Execute() {
 
         return;
     }
-        
-    // all we want to do is check to see if we've encountered a line as the Initialize()
-    // routine already got us moving
-    //
-    // once we've seen a line, using either sensor, stop the robot as we're done for now
-    // (at least in this demo - we'll want to add the real line alignment code here to do
-    // the real work)
-    //
-    // we stop the drivetrain and we set the m_lineAlignCompleted flag to true
-    //
-    // later we'll want to put the actual alignment logic in here
 
-    if (m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor) ||
+    if (m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor) &&
         m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor)) {
 
         // found a line so for now just stop the robot and set the finished flag
@@ -76,16 +71,84 @@ void LineAlignCommand::Execute() {
         m_drivetrain->TankDrive(0.0, 0.0, false);
 
         m_lineAlignCompleted = true;
+
+        return;
     }
 
-    // else we just let the robot crawl forward at the kLineAlignSpeed for now
+    switch (m_state) {
 
-    // we'll check sensors again the next time through this routine
-    //
-    // doing short quick checks or changes and getting out is a key part
-    // of keeping the scheduler (and the entire robot) running as it should be
-    //
-    // we don't loop in here unless it's *really* short and totally deterministic!
+        case StateForward:
+
+            bool sensorLeft, sensorRight;
+
+            sensorLeft  = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
+            sensorRight = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
+
+            // did we align?
+            if (sensorLeft && sensorRight) {
+                m_drivetrain->TankDrive(0.0, 0.0, false);
+                m_lineAlignCompleted = true;
+                m_state - StateStopped;
+                return;
+            }
+
+            if (sensorLeft) {
+                m_drivetrain->TankDrive(0.0, Porterbots::LineDetection::kLineAlignSpeed, false);    // run right side to turn left
+
+
+            }
+                stop the robot 
+                start the robot turning left 
+                save the state that the robot is turning left 
+                get out 
+
+            if right sensor sees the line 
+
+                stop the robot 
+                start the robot turning right  
+                save the state that the robot is turning right  
+                get out 
+
+            get out
+
+        case StateTurningLeft:
+
+            check the sensors
+
+            do both sensors see the line?
+
+                stop the robot 
+                set aligned flag 
+                get out 
+
+            does the right sensor see the line?
+
+                if yes 
+                    Stop turning left 
+                    Start turning right because we went too far 
+                    save the state thet we are turning right 
+                    get out
+
+            does the left sensor still see the line?
+
+                if no
+                    stop turning 
+                    start driving forward 
+                    save the state that we are driving forward 
+                    get out 
+
+                if yes 
+                    // everythign is cool
+                    get out 
+
+
+        case StateTurningRight:
+
+        case StateStopped:
+
+            m_lineAlignCompleted = true;        // something weird happened so just act like we're done
+            break;
+    }
 }
 
 // Make this return true when this Command no longer needs to run Execute()
@@ -109,6 +172,8 @@ void LineAlignCommand::End(bool interrupted) {
     //
     // this is a safety thing mostly
     m_lineAlignCompleted = true;
+
+    m_state              = StateStopped;
 
     // the interrupted flag is true if the command DID NOT finish normally - aka we got
     // "interrupted" by a Cancel() operation
