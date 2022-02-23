@@ -65,7 +65,7 @@ public:
     //
     // some of the command-controlled drive operations might be easier o handle using one drive
     // mode or the other so they would likely call the mode they prefer directly
-    void Drive(double input1, double input2, bool square);
+    void Drive(double input1, double input2, int style, bool square);
     void TankDrive(double left, double right, bool square);
     void ArcadeDrive(double speed, double turn, bool sqaure);
 

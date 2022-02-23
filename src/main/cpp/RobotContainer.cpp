@@ -33,9 +33,26 @@ RobotContainer::RobotContainer()
     // drivetrain - this is how command sequences that need to "drive" the robot do the
     // actual driving without the driver interfering with the command
 
-    m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
-                                         [this] { return m_xboxDriveController.GetRightX(); },
-                                         m_drivetrain));
+    switch (Porterbots::Drivetrain::kDriveModeDefault) {
+
+        case Porterbots::Drivetrain::kDriveModeTank:
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
+                                           [this] { return -(m_xboxDriveController.GetRightY()); },
+                                           Porterbots::Drivetrain::kDriveModeTank, m_drivetrain));
+            break;
+
+        default:
+            std::cout << "RobotContainer: Invalid drive mode - defaulting to Arcade-style" << std::endl;
+
+            // FALLS THROUGH!!!
+
+        case Porterbots::Drivetrain::kDriveModeArcade:
+        
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
+                                           [this] { return m_xboxDriveController.GetRightX(); },
+                                           Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
+            break;
+    }
 }
 
 RobotContainer* RobotContainer::GetInstance() {

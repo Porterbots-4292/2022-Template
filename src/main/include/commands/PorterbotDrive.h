@@ -15,7 +15,7 @@
 class PorterbotDrive : public frc2::CommandHelper<frc2::CommandBase, PorterbotDrive> {
 
  public:
-    PorterbotDrive(std::function<double()> left, std::function<double()> right,
+    PorterbotDrive(std::function<double()> left, std::function<double()> right, int style,
                    Drivetrain& drivetrain);
     void Execute() override;
     bool IsFinished() override;
@@ -27,6 +27,8 @@ class PorterbotDrive : public frc2::CommandHelper<frc2::CommandBase, PorterbotDr
     // on whether we are using tank or arcade style driving
     std::function<double()> m_input1;
     std::function<double()> m_input2;
+
+    int                     m_style;
 
     Drivetrain* m_drivetrain;
 };
