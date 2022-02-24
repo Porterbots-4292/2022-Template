@@ -8,6 +8,11 @@
 
 #include "subsystems/Drivetrain.h"
 
+enum LineAlignStates{
+    makeAnAttempt,
+    backup
+};
+
 /**
  *
  *
@@ -17,6 +22,8 @@ class LineAlignCommand: public frc2::CommandHelper<frc2::CommandBase, LineAlignC
 public:
 
     explicit LineAlignCommand(Drivetrain& m_drivetrain);
+
+    void ChangeState(bool left_sensor_detects_line, bool right_sensor_detects_line);
 
     void Initialize() override;
     void Execute() override;
@@ -29,4 +36,7 @@ private:
     Drivetrain* m_drivetrain;
 
     bool        m_lineAlignCompleted;
+    LineAlignStates m_currentState = makeAnAttempt;
+    uint64_t m_activation_time = 0; 
+    uint64_t m_current_time = 0;
 };

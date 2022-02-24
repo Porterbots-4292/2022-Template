@@ -52,7 +52,7 @@ namespace   Porterbots {
         int const       kDriveModeDefault  = kDriveModeTank;
 
 #ifndef ZOGBOT
-        double const    kMaxOutput      = 0.2;
+        double const    kMaxOutput      = 0.5;
 #else   // ZOGBOT
         double const    kMaxOutput      = 0.1;
 #endif   // ZOGBOT
@@ -82,7 +82,7 @@ namespace   Porterbots {
         // have to re-align for that reason but we don't want to take forever to line up either
         // so we'll probably end up working up some emperical value that works OK based on our testing
 #ifndef ZOGBOT
-        double const    kLineAlignSpeed = 0.2;
+        double const    kLineAlignSpeed = 0.5;
 #else // ZOGBOT
         double const    kLineAlignSpeed = 0.5;
 #endif  // ZOGBOT

@@ -1,8 +1,13 @@
 // LineAlignCommand
 
 #include "Constants.h"
-
+#include <iostream>
 #include "commands/LineAlignCommand.h"
+
+static uint64_t timeSinceEpoch(){
+    using namespace std::chrono;
+    return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+}
 
 LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
 :m_drivetrain(&drivetrain) {
@@ -30,13 +35,12 @@ void LineAlignCommand::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void LineAlignCommand::Execute() {
 
+    m_current_time = timeSinceEpoch();
+
     // first off - hit the motorcontroller so we don't get a timeout
     //
     // we shoudl be moving at this speed anyway so it won't really change the robot
     // speed but it will hit the drivetrain safety timeout
-    m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
-                            Porterbots::LineDetection::kLineAlignSpeed,
-                            false);
 
     // as a safety check, if for any reason line align is completed and we still
     // got called, don't do anything else except for stopping the robot because
@@ -56,7 +60,8 @@ void LineAlignCommand::Execute() {
 
         return;
     }
-        
+    
+
     // all we want to do is check to see if we've encountered a line as the Initialize()
     // routine already got us moving
     //
@@ -68,15 +73,42 @@ void LineAlignCommand::Execute() {
     //
     // later we'll want to put the actual alignment logic in here
 
-    if (m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor) ||
-        m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor)) {
+    // aligning code:
 
-        // found a line so for now just stop the robot and set the finished flag
+    bool left_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
+    bool right_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
+    
+    ChangeState(left_sensor_detects_line, right_sensor_detects_line);
 
-        m_drivetrain->TankDrive(0.0, 0.0, false);
+    switch(m_currentState){
+        case LineAlignStates::makeAnAttempt:
+            if(!left_sensor_detects_line && right_sensor_detects_line){
+                if(m_activation_time + 1000 > m_current_time)
+                    m_activation_time = timeSinceEpoch();
+                m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed, 0, false);
+            }
+            else if(left_sensor_detects_line && !right_sensor_detects_line){
+                if(m_activation_time + 1000 > m_current_time)
+                    m_activation_time = timeSinceEpoch();
+                m_drivetrain->TankDrive(0, Porterbots::LineDetection::kLineAlignSpeed, false);
+            }
+            else if(left_sensor_detects_line && right_sensor_detects_line){
+                if(m_activation_time + 1000 > m_current_time)
+                    m_activation_time = timeSinceEpoch();
+                m_drivetrain->TankDrive(0,0,false);
+            }
+            else{
+                m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
+            }
 
-        m_lineAlignCompleted = true;
+        break;
+        case LineAlignStates::backup:
+            m_drivetrain->TankDrive(-Porterbots::LineDetection::kLineAlignSpeed, -Porterbots::LineDetection::kLineAlignSpeed, false);
+        break;
+
     }
+
+
     // else we just let the robot crawl forward at the kLineAlignSpeed for now
 
     // we'll check sensors again the next time through this routine
@@ -85,6 +117,23 @@ void LineAlignCommand::Execute() {
     // of keeping the scheduler (and the entire robot) running as it should be
     //
     // we don't loop in here unless it's *really* short and totally deterministic!
+}
+
+void LineAlignCommand::ChangeState(bool left_sensor_detects_line, bool right_sensor_detects_line){
+    if(left_sensor_detects_line && right_sensor_detects_line){
+        m_lineAlignCompleted = true;
+    }
+    else if(left_sensor_detects_line || right_sensor_detects_line){
+        if(m_activation_time + 1000 < m_current_time){
+            m_currentState = LineAlignStates::backup;
+            return;
+        }
+    }
+    else if(m_currentState == backup){
+        m_currentState = makeAnAttempt;
+    }
+    
+
 }
 
 // Make this return true when this Command no longer needs to run Execute()

@@ -53,21 +53,15 @@ Drivetrain::Drivetrain() {
     //
     // some folks go as far as doing a factory reset in the code and then changing *ONLY* what
     // needs changing - this isn't a bad idea either
-<<<<<<< HEAD
     //m_leftSideMotors.SetInverted(false);
     //m_rightSideMotors.SetInverted(true);
 
     
-=======
-
-    m_leftSideMotors.SetInverted(false);
-    m_rightSideMotors.SetInverted(true);
->>>>>>> c8f2623e258f910f47ff63aec155113afd2d6f9b
     
     // seems the motor controllers don't inherit SetInverted() from the
     // motorcontroller group so we set them individually here - this seems to work
+#ifdef ZOGBOT
     m_leftFrontController.SetInverted(false);
-<<<<<<< HEAD
     m_rightFrontController.SetInverted(true); 
 #else
     m_leftFrontController.SetInverted(false);
@@ -75,12 +69,6 @@ Drivetrain::Drivetrain() {
     m_rightFrontController.SetInverted(true);
     m_rightRearController.SetInverted(true);
 
-=======
-    m_rightFrontController.SetInverted(true);
-#ifndef ZOGBOT
-    m_leftRearController.SetInverted(false);
-    m_rightRearController.SetInverted(true);
->>>>>>> c8f2623e258f910f47ff63aec155113afd2d6f9b
 #endif// ZOGBOT
 }
 
