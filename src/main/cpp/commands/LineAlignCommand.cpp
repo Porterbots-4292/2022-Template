@@ -21,22 +21,21 @@ void LineAlignCommand::Initialize() {
 
     m_lineAlignCompleted = false;
 
-    m_state              = StateForward;
+    m_state              = StateGoingForward;
 
     m_rightSpeed         = Porterbots::LineDetection::kLineAlignSpeed;
     m_leftSpeed          = Porterbots::LineDetection::kLineAlignSpeed;
-    
 
     // start moving ahead at our predefined speed to search for the alignment line
     //
     // do not square the input
-    m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
-                            Porterbots::LineDetection::kLineAlignSpeed,
-                            false);
+    m_drivetrain->TankDrive(m_leftSpeed, m_rightSpeed, false);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void LineAlignCommand::Execute() {
+
+    bool sensorLeft, sensorRight;
 
     // first off - hit the motorcontroller so we don't get a timeout
     //
@@ -55,6 +54,9 @@ void LineAlignCommand::Execute() {
     // be run at least once because commands are not unscheduled until after the
     // Execute() function has been run
     //
+    // the End() routine will set the line aligned flag so we can safely bail out here
+    // if that's the case
+    //
     // doing this here and now could save us a robot crash or some twisty debugging later...
 
     if (m_lineAlignCompleted) {
@@ -63,86 +65,96 @@ void LineAlignCommand::Execute() {
         return;
     }
 
-    if (m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor) &&
-        m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor)) {
+    // read each sensor and save them becaus we'll need to look at the multiple times in the following code
+    sensorLeft  = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
+    sensorRight = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
 
-        // found a line so for now just stop the robot and set the finished flag
+    // did we align?
+    //
+    // if we are aligned, *BOTH* sensors will have detected the line
+    if (sensorLeft && sensorRight) {
+        m_drivetrain->TankDrive(0.0, 0.0, false);   // stop the robot
 
-        m_drivetrain->TankDrive(0.0, 0.0, false);
+        m_lineAlignCompleted = true;                // indicate we are done ("aligned" that is)
 
-        m_lineAlignCompleted = true;
+        m_state              = StateStopped;
 
         return;
     }
 
+    // if we got here, were not aligned (yet) - at most we have one sensor seeing anything
+    //
+    // what we do next is going to depend on what we are doing and what the sensors have detected (if anything)
     switch (m_state) {
 
-        case StateForward:
-
-            bool sensorLeft, sensorRight;
-
-            sensorLeft  = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
-            sensorRight = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
-
-            // did we align?
-            if (sensorLeft && sensorRight) {
-                m_drivetrain->TankDrive(0.0, 0.0, false);
-                m_lineAlignCompleted = true;
-                m_state - StateStopped;
-                return;
+        case StateGoingForward:
+            // do any of the sensors see anything at all?
+            //
+            // if not, we're not going to change what we are doing so we'll just return;
+            if ( ! (sensorLeft || sensorRight)) {
+                return;   // nothing else to do since we aren't seeing anything
             }
 
+            // if we get here, we're not aligned but one of the sensors found the line
+            //
+            // which one will determine what we do next
+            //
+            // if the left sensor sees the line, we're coming in from the left so we'll need to turn left to align
             if (sensorLeft) {
-                m_drivetrain->TankDrive(0.0, Porterbots::LineDetection::kLineAlignSpeed, false);    // run right side to turn left
+                m_leftSpeed  = 0.0;
+                m_rightSpeed = Porterbots::LineDetection::kLineAlignSpeed;    // run right side to turn left
 
+                m_state = StateTurningLeft;
+            } else {
+            // the only other situation here is that the right sensor saw the line (it's not both sensors, it's not none of the
+            // sensors, and it's not the left sensor so the only possibility remaining is the right sensor)
+                m_leftSpeed  = Porterbots::LineDetection::kLineAlignSpeed;    // run left side to turn right
+                m_rightSpeed = 0.0;
 
+                m_state = StateTurningRight;
             }
-                stop the robot 
-                start the robot turning left 
-                save the state that the robot is turning left 
-                get out 
 
-            if right sensor sees the line 
+            // whatever we set the speeds to above, drive that way now
+            m_drivetrain->TankDrive(m_leftSpeed, m_rightSpeed, false);
 
-                stop the robot 
-                start the robot turning right  
-                save the state that the robot is turning right  
-                get out 
-
-            get out
+            return;
 
         case StateTurningLeft:
 
-            check the sensors
+            // the big issue here is do we keep turning or change our plan?
+            //
+            // depends on the whether the sensor that kicked this all off still sees the line
+            //
+            // in this case, we're turning left so that means the left sensor saw the line first - if the left
+            // sensor still sees the line, keep turning
+            //
+            // if the left sensor lost the line, that means it, the sensor, moved in front of the line in which
+            // case we need to drive forward until we see the line agian (with whatever sensor sees it first)
+            if ( ! sensorLeft) {
+                m_rightSpeed = Porterbots::LineDetection::kLineAlignSpeed;
+                m_leftSpeed  = Porterbots::LineDetection::kLineAlignSpeed;
 
-            do both sensors see the line?
+                m_drivetrain->TankDrive(m_leftSpeed, m_rightSpeed, false);
 
-                stop the robot 
-                set aligned flag 
-                get out 
+                m_state = StateGoingForward;
+            }
 
-            does the right sensor see the line?
-
-                if yes 
-                    Stop turning left 
-                    Start turning right because we went too far 
-                    save the state thet we are turning right 
-                    get out
-
-            does the left sensor still see the line?
-
-                if no
-                    stop turning 
-                    start driving forward 
-                    save the state that we are driving forward 
-                    get out 
-
-                if yes 
-                    // everythign is cool
-                    get out 
-
+            // otherwise the right sensor still sees the line so keep turning left a we are
+            return;
 
         case StateTurningRight:
+
+            // mirror ismage of when we ww're turning left so just flip left and right in the logic
+            if ( ! sensorRight) {
+                m_rightSpeed = Porterbots::LineDetection::kLineAlignSpeed;
+                m_leftSpeed  = Porterbots::LineDetection::kLineAlignSpeed;
+
+                m_drivetrain->TankDrive(m_leftSpeed, m_rightSpeed, false);
+
+                m_state = StateGoingForward;
+            }
+
+            return;
 
         case StateStopped:
 

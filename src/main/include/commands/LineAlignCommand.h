@@ -30,7 +30,10 @@ private:
 
     bool        m_lineAlignCompleted;
 
-    enum State  { StateStopped, StateForward, StateTurningLeft, StateTurningRight};
+    // the variables below are used to maintiain state across multiple invocations of the Execute() function
+    //
+    // they track what general state we are in and the robot speeds that are in effect
+    enum State  { StateStopped, StateGoingForward, StateTurningLeft, StateTurningRight};
     State       m_state;
 
     double      m_rightSpeed, m_leftSpeed;

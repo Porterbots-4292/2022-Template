@@ -28,7 +28,7 @@
 // the bulk of the code base is totally the same with just a few small differences in the hardware being
 // used - we can accomodate the hardware differences and since these differences get wrapped by the higher
 // level WPILib functions, the higher level code is unchanged
-//#define     ZOGBOT
+#define     ZOGBOT
 
 
 namespace   Porterbots {
@@ -85,7 +85,7 @@ namespace   Porterbots {
 #ifndef ZOGBOT
         double const    kLineAlignSpeed = 0.2;
 #else // ZOGBOT
-        double const    kLineAlignSpeed = 0.5;
+        double const    kLineAlignSpeed = 0.4;
 #endif  // ZOGBOT
     }
 
