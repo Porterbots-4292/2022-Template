@@ -87,6 +87,10 @@ namespace   Porterbots {
 #else // ZOGBOT
         double const    kLineAlignSpeed = 0.4;
 #endif  // ZOGBOT
+        // side moving "forward"
+        double const    kLineAlignPivotFastSideSpeed  = kLineAlignSpeed;
+        // side moving "backward"
+        double const    kLineAlignPivotSlowSideSpeed = -kLineAlignSpeed;
     }
 
 }

@@ -101,15 +101,17 @@ void LineAlignCommand::Execute() {
             //
             // if the left sensor sees the line, we're coming in from the left so we'll need to turn left to align
             if (sensorLeft) {
-                m_leftSpeed  = 0.0;
-                m_rightSpeed = Porterbots::LineDetection::kLineAlignSpeed;    // run right side to turn left
+                m_leftSpeed  = Porterbots::LineDetection::kLineAlignPivotSlowSideSpeed;
+                m_rightSpeed = Porterbots::LineDetection::kLineAlignPivotFastSideSpeed;
 
                 m_state = StateTurningLeft;
+
             } else {
+                
             // the only other situation here is that the right sensor saw the line (it's not both sensors, it's not none of the
             // sensors, and it's not the left sensor so the only possibility remaining is the right sensor)
-                m_leftSpeed  = Porterbots::LineDetection::kLineAlignSpeed;    // run left side to turn right
-                m_rightSpeed = 0.0;
+                m_leftSpeed  = Porterbots::LineDetection::kLineAlignPivotFastSideSpeed;
+                m_rightSpeed = Porterbots::LineDetection::kLineAlignPivotSlowSideSpeed;
 
                 m_state = StateTurningRight;
             }
