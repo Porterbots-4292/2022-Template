@@ -9,14 +9,14 @@
 #pragma once
 
 
-// enable this define to build vary the build for mr herzog's
-// test righ that uses soem slightly different hardware including fewer drive motors
-// as well as the REV Robotics ZOGBOT motor controllers
+// enable this define to vary the build for mr herzog's test rig
+// that uses a slightly different hardware configuration including fewer drive motors
+// as well as the REV Robotics SparkMax motor controllers with NEO brushless motors
 //
 // if ZOGBOT is not defined, the code will build for the Porterbots' configuration
-// using Cross the Road Electronics VictorSPX motor controllers and a pair of motors on each side
+// using four Cross the Road Electronics VictorSPX motor controllers and a pair of motors on each side
 //
-// be sure comment out the next line for a normal Porterbots build (that should be the default)
+// be sure to comment out the next line for a normal Porterbots build (that should be the default)
 //
 // this also impacts some other robot aspects like turning down the max speed and the speed
 // the line alignment code uses to prevent potentially loose motors on the test rig from
