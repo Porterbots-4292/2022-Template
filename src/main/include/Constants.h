@@ -28,7 +28,7 @@
 // the bulk of the code base is totally the same with just a few small differences in the hardware being
 // used - we can accomodate the hardware differences and since these differences get wrapped by the higher
 // level WPILib functions, the higher level code is unchanged
-//#define     ZOGBOT
+#define     ZOGBOT
 
 
 namespace   Porterbots {
@@ -43,6 +43,11 @@ namespace   Porterbots {
         int const       kMotorRightRearID  = 11;
         int const       kMotorLeftFrontID  = 12;
         int const       kMotorLeftRearID   = 13;
+
+#ifdef  ZOGBOT
+        int const       kMotorSpinnerID    = 20;
+        int const       kPigeonID          = 50;
+#endif  // ZOGBOT
     }
 
     namespace Drivetrain {
@@ -93,4 +98,10 @@ namespace   Porterbots {
         double const    kLineAlignPivotSlowSideSpeed = -kLineAlignSpeed;
     }
 
+#ifdef ZOGBOT
+    namespace Ports {
+        int const       kEncoderAPort = 8;
+        int const       kEncoderBPort = 9;
+    }
+#endif      // ZOGBOT
 }

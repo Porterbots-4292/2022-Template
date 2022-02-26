@@ -67,6 +67,10 @@ void RobotContainer::ConfigureButtonBindings() {
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(m_lineAlignCommand);
+#ifdef ZOGBOT
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenHeld(m_lineAlignCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenHeld(m_lineAlignCommand);
+#endif // ZOGBOT
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
