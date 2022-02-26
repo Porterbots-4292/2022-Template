@@ -13,6 +13,8 @@ RobotContainer::RobotContainer()
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
+    frc::SmartDashboard::PutData(&m_spinner);
+    frc::SmartDashboard::PutData(&m_imu);
 
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));

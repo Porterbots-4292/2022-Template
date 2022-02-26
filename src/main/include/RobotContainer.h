@@ -6,6 +6,8 @@
 #include <frc2/command/Command.h>
 
 #include "subsystems/Drivetrain.h"
+#include "subsystems/Spinner.h"
+#include "subsystems/IMU.h"
 
 #include "commands/AutonomousCommand.h"
 #include "commands/LineAlignCommand.h"
@@ -36,6 +38,8 @@ private:
 
     // subsystems
     Drivetrain   m_drivetrain;
+    Spinner      m_spinner;
+    IMU          m_imu;
 
     // commands
     AutonomousCommand m_autonomousCommand;

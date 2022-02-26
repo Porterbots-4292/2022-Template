@@ -24,6 +24,7 @@ Spinner::Spinner() {
 
 
 void Spinner::Set(double speed) {
+    m_savedSpeed = speed;
     m_spinnerController.Set(speed);
 }
 

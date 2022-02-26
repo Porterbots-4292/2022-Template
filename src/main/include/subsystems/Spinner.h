@@ -25,6 +25,8 @@ private:
     WPI_VictorSPX   m_spinnerController{Porterbots::CAN_ID::kMotorSpinnerID};
     frc::Encoder    m_encoder{Porterbots::Ports::kEncoderAPort, Porterbots::Ports::kEncoderBPort};
 
+    double          m_savedSpeed;
+
 public:
     Spinner();
 
