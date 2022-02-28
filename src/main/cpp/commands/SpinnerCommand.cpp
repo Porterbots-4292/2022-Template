@@ -6,6 +6,18 @@
 
 #ifdef  ZOGBOT
 
+
+static bool distTravelCheck(int currentDist, int targetDist) {
+
+    if (abs(currentDist) - targetDist >= 0) {
+
+        return true;        // gone at least that far
+    }
+    
+    return false;
+}
+
+
 SpinnerLeftCommand::SpinnerLeftCommand(Spinner& spinner)
 :m_spinner(&spinner) {
 
@@ -19,6 +31,8 @@ SpinnerLeftCommand::SpinnerLeftCommand(Spinner& spinner)
 
 // Called just before this Command runs the first time
 void SpinnerLeftCommand::Initialize() {
+
+    m_spinner->ResetEncoder();                          // start from 0
 
     m_speed = -Porterbots::Spinner::kSpinnerSpeed;      // spin backwards for left
 
@@ -37,7 +51,9 @@ void SpinnerLeftCommand::Execute() {
 
 bool SpinnerLeftCommand::IsFinished() {
 
-    return false;               // we keep going until we get interrupted
+    // we can make it so that we don't care if we are going forward or backward
+
+    return distTravelCheck(m_spinner->GetDistEncoder(), Porterbots::Spinner::kTargetDistance);
 }
 
 
@@ -64,6 +80,8 @@ SpinnerRightCommand::SpinnerRightCommand(Spinner& spinner)
 
 void SpinnerRightCommand::Initialize() {
 
+    m_spinner->ResetEncoder();
+
     m_speed = Porterbots::Spinner::kSpinnerSpeed;      // spin forwards for right
 
     m_spinner->Set(m_speed);
@@ -80,7 +98,7 @@ void SpinnerRightCommand::Execute() {
 
 bool SpinnerRightCommand::IsFinished() {
 
-    return false;
+    return distTravelCheck(m_spinner->GetDistEncoder(), Porterbots::Spinner::kTargetDistance);
 }
 
 
