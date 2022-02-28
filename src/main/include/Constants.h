@@ -106,6 +106,8 @@ namespace   Porterbots {
 
     namespace Spinner {
         double const    kSpinnerSpeed = 0.15;
+
+        int const       kTargetDistance = 6 * 12;         // distance in inches
     }
     
 #endif      // ZOGBOT

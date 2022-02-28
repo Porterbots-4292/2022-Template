@@ -50,8 +50,6 @@ int Spinner::GetRawEncoder() {
 void Spinner::UpdateDashboard() {
     frc::SmartDashboard::PutData("Spinner Encoder:   ", &m_encoder);
     frc::SmartDashboard::PutData("Spinner Motor:     ", &m_spinnerController);
-
-    std::cout << "Encoder Dist: " << m_encoder.Get() << std::endl;
 }
 
 #endif // ZOGBOT
