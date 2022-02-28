@@ -15,7 +15,10 @@ Spinner::Spinner() {
     SetName("Spinner");
 
     SetSubsystem("Spinner");
+    AddChild("Motor  ", &m_spinnerController);
     AddChild("Encoder", &m_encoder);
+
+    UpdateDashboard();
 
     // just pretend the encoder is connected to a 6" wheel
     m_encoder.SetDistancePerPulse((wpi::numbers::pi * kSpinnerWheelDiameter) / kSpinnerEncoderCPR);
@@ -41,6 +44,14 @@ int Spinner::GetDistEncoder() {
 
 int Spinner::GetRawEncoder() {
     return m_encoder.GetRaw();
+}
+
+
+void Spinner::UpdateDashboard() {
+    frc::SmartDashboard::PutData("Spinner Encoder:   ", &m_encoder);
+    frc::SmartDashboard::PutData("Spinner Motor:     ", &m_spinnerController);
+
+    std::cout << "Encoder Dist: " << m_encoder.Get() << std::endl;
 }
 
 #endif // ZOGBOT

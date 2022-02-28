@@ -103,5 +103,10 @@ namespace   Porterbots {
         int const       kEncoderAPort = 8;
         int const       kEncoderBPort = 9;
     }
+
+    namespace Spinner {
+        double const    kSpinnerSpeed = 0.15;
+    }
+    
 #endif      // ZOGBOT
 }

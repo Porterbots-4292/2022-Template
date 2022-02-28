@@ -30,14 +30,16 @@ private:
 public:
     Spinner();
 
-    void    Set(double speed);
+    void            Set(double speed);
 
-    void    ResetEncoder();
-    int     GetDistEncoder();
-    int     GetRawEncoder();
+    void            ResetEncoder();
+    int             GetDistEncoder();
+    int             GetRawEncoder();
 
-    int const   kSpinnerEncoderCPR    = 28;
-    int const   kSpinnerWheelDiameter = 6;
+    void            UpdateDashboard();
+
+    int const       kSpinnerEncoderCPR    = 28;
+    int const       kSpinnerWheelDiameter = 6;
 };
 
 #endif  // ZOGBOT

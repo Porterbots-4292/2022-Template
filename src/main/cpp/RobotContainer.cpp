@@ -9,12 +9,13 @@
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
-    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain) {
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain),
+      m_spinnerRightCommand(m_spinner), m_spinnerLeftCommand(m_spinner) {
 
     // Smartdashboard Subsystems
-    frc::SmartDashboard::PutData(&m_drivetrain);
-    frc::SmartDashboard::PutData(&m_spinner);
-    frc::SmartDashboard::PutData(&m_imu);
+    frc::SmartDashboard::PutData("DriveTrain:  ", &m_drivetrain);
+    frc::SmartDashboard::PutData("Spinner:     ", &m_spinner);
+    frc::SmartDashboard::PutData("IMU:         ", &m_imu);
 
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
@@ -68,10 +69,12 @@ void RobotContainer::ConfigureButtonBindings() {
     // while the "A" button is held, run the line alignment command
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(m_lineAlignCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 #ifdef ZOGBOT
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenHeld(m_lineAlignCommand);
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenHeld(m_lineAlignCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(&m_spinnerLeftCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(&m_spinnerRightCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).CancelWhenPressed(&m_spinnerLeftCommand)
+                                                                                      .CancelWhenPressed(&m_spinnerRightCommand);
 #endif // ZOGBOT
 }
 

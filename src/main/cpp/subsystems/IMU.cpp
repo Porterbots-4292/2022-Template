@@ -14,7 +14,6 @@
 
 
 IMU::IMU() {
-
     Reset();
 }
 

@@ -11,6 +11,7 @@
 
 #include "commands/AutonomousCommand.h"
 #include "commands/LineAlignCommand.h"
+#include "commands/SpinnerCommand.h"
 #include "commands/PorterbotDrive.h"
 
 #include <frc/XboxController.h>
@@ -26,7 +27,7 @@ public:
     frc2::Command* GetAutonomousCommand();
     static RobotContainer* GetInstance();
 
-    // The robot's subsystems
+    Spinner      m_spinner;
 
 private:
 
@@ -38,12 +39,13 @@ private:
 
     // subsystems
     Drivetrain   m_drivetrain;
-    Spinner      m_spinner;
     IMU          m_imu;
 
     // commands
-    AutonomousCommand m_autonomousCommand;
-    LineAlignCommand  m_lineAlignCommand;
+    AutonomousCommand       m_autonomousCommand;
+    LineAlignCommand        m_lineAlignCommand;
+    SpinnerRightCommand     m_spinnerRightCommand;
+    SpinnerLeftCommand      m_spinnerLeftCommand;
 
     frc::SendableChooser<frc2::Command*> m_chooser;
 
