@@ -66,7 +66,7 @@ void RobotContainer::ConfigureButtonBindings() {
     // while the "A" button is held, run the line alignment command
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(m_lineAlignCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
