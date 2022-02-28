@@ -30,8 +30,6 @@ Drivetrain::Drivetrain() {
     m_robotDrive.SetSafetyEnabled(Porterbots::Drivetrain::kSafetyEnabled);
     m_robotDrive.SetExpiration(Porterbots::Drivetrain::kExpirationTime);
     m_robotDrive.SetMaxOutput(Porterbots::Drivetrain::kMaxOutput);
-
-    std::cout << "GetMaxOutput() = " << Porterbots::Drivetrain::kMaxOutput << std::endl;
  
     // SetInverted to true reverses the "normal" rotation direction of the associated motor
     // controller or controller group - typicaly this is because motors on different sides
