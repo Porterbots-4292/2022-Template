@@ -4,10 +4,13 @@
 #include <iostream>
 #include "commands/LineAlignCommand.h"
 
+/*
+This was used for time managament but not anymore :D
 static uint64_t timeSinceEpoch(){
     using namespace std::chrono;
     return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
+*/
 
 LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
 :m_drivetrain(&drivetrain) {
@@ -76,24 +79,21 @@ void LineAlignCommand::Execute() {
     bool left_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
     bool right_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
     
-    switch(m_currentState){
-        case LineAlignStates::makeAnAttempt:
-            if(!left_sensor_detects_line && right_sensor_detects_line){
-                m_drivetrain->TankDrive(Porterbots::LineDetection::kRotateSpeed, -Porterbots::LineDetection::kRotateSpeed, false);
-            }
-            else if(left_sensor_detects_line && !right_sensor_detects_line){
-                m_drivetrain->TankDrive(-Porterbots::LineDetection::kRotateSpeed, Porterbots::LineDetection::kRotateSpeed, false);
-            }
-            else if(left_sensor_detects_line && right_sensor_detects_line){
-                // Stops - everything is aligned!
-                m_drivetrain->TankDrive(0,0,false);
-            }
-            else{
-                m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
-            }
-        break;
-
+    if(!left_sensor_detects_line && right_sensor_detects_line){
+        m_drivetrain->TankDrive(Porterbots::LineDetection::kRotateSpeed, -Porterbots::LineDetection::kRotateSpeed, false);
+        }
+    else if(left_sensor_detects_line && !right_sensor_detects_line){
+        m_drivetrain->TankDrive(-Porterbots::LineDetection::kRotateSpeed, Porterbots::LineDetection::kRotateSpeed, false);
     }
+    else if(left_sensor_detects_line && right_sensor_detects_line){
+        // Stops - everything is aligned!
+        m_lineAlignCompleted = true;
+        m_drivetrain->TankDrive(0,0,false);
+        }
+    else{
+        m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
+        }
+
 
 
     // else we just let the robot crawl forward at the kLineAlignSpeed for now

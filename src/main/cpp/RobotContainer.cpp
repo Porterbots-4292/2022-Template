@@ -3,6 +3,7 @@
 #include "RobotContainer.h"
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <Constants.h>
 
 
 
@@ -36,8 +37,8 @@ RobotContainer::RobotContainer()
     switch (Porterbots::Drivetrain::kDriveModeDefault) {
 
         case Porterbots::Drivetrain::kDriveModeTank:
-            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
-                                           [this] { return -(m_xboxDriveController.GetRightY()); },
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
+                                           [this] { return -(m_xboxDriveController.GetRightY()) * Porterbots::Drivetrain::kControlScaleFactor; },
                                            Porterbots::Drivetrain::kDriveModeTank, m_drivetrain));
             //m_drivetrain.SetDefaultCommand(AutonomousCommand(m_drivetrain));
             break;
@@ -49,8 +50,8 @@ RobotContainer::RobotContainer()
 
         case Porterbots::Drivetrain::kDriveModeArcade:
         
-            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
-                                           [this] { return m_xboxDriveController.GetRightX(); },
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
+                                           [this] { return m_xboxDriveController.GetRightX() * Porterbots::Drivetrain::kControlScaleFactor; },
                                            Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
             break;
     }
