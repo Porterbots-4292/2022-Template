@@ -95,11 +95,15 @@ void Drivetrain::Drive(double input1, double input2, int driveMode, bool square)
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed, bool square) {
 
     m_robotDrive.TankDrive(leftSpeed, rightSpeed, square);
+
+    UpdateDashboard();
 }
 
 void Drivetrain::ArcadeDrive(double speed, double turn, bool square) {
 
     m_robotDrive.ArcadeDrive(speed, turn, square);
+
+    UpdateDashboard();
 }
 
 void Drivetrain::Periodic() {
@@ -145,4 +149,14 @@ bool Drivetrain::IsLineDetected(int sensor) {
     // we invert the return from the sensor because for us, a "true" indicates
     // the line was found
     return (sensorReading);
+}
+
+
+void Drivetrain::UpdateDashboard() {
+
+    frc::SmartDashboard::PutData("DriveTrain: ", &m_robotDrive);
+    frc::SmartDashboard::PutNumber("DriveTrain L: ", m_leftFrontController.Get());
+    frc::SmartDashboard::PutNumber("DriveTrain R: ", m_rightFrontController.Get());
+    
+    m_imu.UpdateDashboard();
 }

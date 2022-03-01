@@ -7,13 +7,20 @@
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/DigitalInput.h>
 
+#include <ctre/phoenix.h>           // this can be included unconditionally for all builds including ZOGBOT
+
 #include "Constants.h"
 
-#ifndef ZOGBOT
-#include <ctre/phoenix.h>
-#else   // ZOGBOT
-#include <rev/CANSparkMax.h>
+#include "subsystems/IMU.h"
+
+#ifdef ZOGBOT
+#include <rev/CANSparkMax.h>        // this could also be included unconditionally
+                                    // if you want to make having the REV libs installed a requirement to buil
 #endif  // ZOGBOT
+
+
+
+
 
 
 /**
@@ -52,6 +59,8 @@ private:
 
     bool    m_lineAlignCompleted;
 
+    IMU     m_imu;
+
 public:
     Drivetrain();
 
@@ -74,4 +83,6 @@ public:
 
     void Periodic() override;
     void SimulationPeriodic() override;
+
+    void UpdateDashboard();
 };

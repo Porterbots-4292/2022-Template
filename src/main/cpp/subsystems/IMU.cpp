@@ -22,9 +22,18 @@ void IMU::Reset() {
 }
 
 
-
 int IMU::GetHeading() {
     return m_imu.GetAngle();
+}
+
+
+void IMU::UpdateDashboard() {
+
+    double yaw = m_imu.GetYaw();
+
+    std::cout << "IMU Yaw: " << yaw << std::endl;
+    
+    frc::SmartDashboard::PutNumber("IMU Yaw:   ", yaw);
 }
 
 #endif // ZOGBOT

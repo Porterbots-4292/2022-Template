@@ -30,6 +30,8 @@ public:
     void    Reset();
 
     int     GetHeading();
+
+    void    UpdateDashboard();
 };
 
 #endif  // ZOGBOT
