@@ -31,8 +31,6 @@ void IMU::UpdateDashboard() {
 
     double yaw = m_imu.GetYaw();
 
-    std::cout << "IMU Yaw: " << yaw << std::endl;
-    
     frc::SmartDashboard::PutNumber("IMU Yaw:   ", yaw);
 }
 

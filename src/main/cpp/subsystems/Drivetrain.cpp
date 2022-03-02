@@ -90,20 +90,18 @@ void Drivetrain::Drive(double input1, double input2, int driveMode, bool square)
             m_robotDrive.TankDrive(input1, input2, square);
             break;
     }
+
+    UpdateDashboard();
 }
 
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed, bool square) {
 
     m_robotDrive.TankDrive(leftSpeed, rightSpeed, square);
-
-    UpdateDashboard();
 }
 
 void Drivetrain::ArcadeDrive(double speed, double turn, bool square) {
 
     m_robotDrive.ArcadeDrive(speed, turn, square);
-
-    UpdateDashboard();
 }
 
 void Drivetrain::Periodic() {

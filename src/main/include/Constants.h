@@ -105,7 +105,7 @@ namespace   Porterbots {
     }
 
     namespace Spinner {
-        double const    kSpinnerSpeed = 0.15;
+        double const    kSpinnerSpeed = 0.20;
 
         int const       kTargetDistance = 6 * 12;         // distance in inches
     }
