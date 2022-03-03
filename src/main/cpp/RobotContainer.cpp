@@ -4,7 +4,7 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <Constants.h>
-
+#include <frc/DoubleSolenoid.h>
 
 
 RobotContainer* RobotContainer::m_robotContainer = NULL;
@@ -55,6 +55,10 @@ RobotContainer::RobotContainer()
                                            Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
             break;
     }
+
+    // Adds the solenoid for testing
+    frc::DoubleSolenoid exampleSolenoidPCM{frc::PneumaticsModuleType::CTREPCM, Porterbots::Solenoids::solenoidPort1, Porterbots::Solenoids::solenoidPort2};
+    exampleSolenoidPCM.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 RobotContainer* RobotContainer::GetInstance() {

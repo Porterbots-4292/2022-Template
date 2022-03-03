@@ -84,11 +84,20 @@ namespace   Porterbots {
 
         double const kRotateSpeed = 0.4;
 
+
+
 #ifndef ZOGBOT
         double const    kLineAlignSpeed = 0.4;
 #else // ZOGBOT
         double const    kLineAlignSpeed = 0.5;
 #endif  // ZOGBOT
+    }
+
+    namespace Solenoids {
+            int const solenoidPort1 = 2;
+            int const solenoidPort2 = 3;
+            int const solenoidCanId = 1;
+
     }
 
 }
