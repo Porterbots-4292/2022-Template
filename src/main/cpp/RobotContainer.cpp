@@ -56,6 +56,8 @@ RobotContainer::RobotContainer()
                                            Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
             break;
     }
+
+    m_solenoid.Set(true);
 }
 
 RobotContainer* RobotContainer::GetInstance() {

@@ -16,6 +16,8 @@
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc/Solenoid.h>
+#include <frc/DoubleSolenoid.h>
 
 #include "Constants.h"
 
@@ -40,6 +42,9 @@ private:
     // subsystems
     Drivetrain   m_drivetrain;
     IMU          m_imu;
+    frc::Solenoid   m_solenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 0};
+
+    frc::DoubleSolenoid   m_dblSolenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 4, 5};
 
     // commands
     AutonomousCommand       m_autonomousCommand;

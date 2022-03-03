@@ -43,6 +43,7 @@ namespace   Porterbots {
         int const       kMotorRightRearID  = 11;
         int const       kMotorLeftFrontID  = 12;
         int const       kMotorLeftRearID   = 13;
+        int const       kPcmID             = 1;
 
 #ifdef  ZOGBOT
         int const       kMotorSpinnerID    = 20;
