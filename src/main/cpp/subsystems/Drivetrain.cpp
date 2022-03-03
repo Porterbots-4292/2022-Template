@@ -2,9 +2,11 @@
 
 #include "subsystems/Drivetrain.h"
 #include <frc/smartdashboard/SmartDashboard.h>
-
+#include <iostream>
 
 Drivetrain::Drivetrain() {
+
+    std::cout << "WE INIT";
 
     // this sets up a bunch of stats to display on the LiveWindow
     //

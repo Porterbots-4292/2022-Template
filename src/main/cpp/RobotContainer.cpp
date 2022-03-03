@@ -45,9 +45,7 @@ RobotContainer::RobotContainer()
 
         default:
             std::cout << "RobotContainer: Invalid drive mode - defaulting to Arcade-style" << std::endl;
-
             // FALLS THROUGH!!!
-
         case Porterbots::Drivetrain::kDriveModeArcade:
         
             m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
@@ -57,8 +55,6 @@ RobotContainer::RobotContainer()
     }
 
     // Adds the solenoid for testing
-    frc::DoubleSolenoid exampleSolenoidPCM{frc::PneumaticsModuleType::CTREPCM, Porterbots::Solenoids::solenoidPort1, Porterbots::Solenoids::solenoidPort2};
-    exampleSolenoidPCM.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 RobotContainer* RobotContainer::GetInstance() {

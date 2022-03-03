@@ -6,6 +6,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <frc/DoubleSolenoid.h>
 
 void Robot::RobotInit() {}
 
@@ -51,6 +52,9 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+  frc::DoubleSolenoid exampleSolenoidPCM{frc::PneumaticsModuleType::CTREPCM, Porterbots::Solenoids::solenoidPort1, Porterbots::Solenoids::solenoidPort2};
+    exampleSolenoidPCM.Set(frc::DoubleSolenoid::Value::kReverse);
+
 }
 
 /**
