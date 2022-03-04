@@ -4,7 +4,6 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <Constants.h>
-#include <frc/DoubleSolenoid.h>
 
 
 RobotContainer* RobotContainer::m_robotContainer = NULL;
@@ -18,6 +17,7 @@ RobotContainer::RobotContainer()
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
+
 
     ConfigureButtonBindings();
 
@@ -69,6 +69,7 @@ void RobotContainer::ConfigureButtonBindings() {
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kB).WhenHeld(&m_solenoidCommand);
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

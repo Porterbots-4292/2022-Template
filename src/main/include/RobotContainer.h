@@ -10,6 +10,7 @@
 #include "commands/AutonomousCommand.h"
 #include "commands/LineAlignCommand.h"
 #include "commands/PorterbotDrive.h"
+#include "commands/MovingSolenoidBasic.h"
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
@@ -40,6 +41,7 @@ private:
     // commands
     AutonomousCommand m_autonomousCommand;
     LineAlignCommand  m_lineAlignCommand;
+    MovingSolenoidBasic m_solenoidCommand;
 
     frc::SendableChooser<frc2::Command*> m_chooser;
 
