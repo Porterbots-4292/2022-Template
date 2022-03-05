@@ -13,6 +13,7 @@ RobotContainer::RobotContainer()
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
+    frc::SmartDashboard::PutData(&m_intake);
 
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
@@ -20,6 +21,7 @@ RobotContainer::RobotContainer()
 
 
     ConfigureButtonBindings();
+
 
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 
@@ -40,7 +42,6 @@ RobotContainer::RobotContainer()
             m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
                                            [this] { return -(m_xboxDriveController.GetRightY()) * Porterbots::Drivetrain::kControlScaleFactor; },
                                            Porterbots::Drivetrain::kDriveModeTank, m_drivetrain));
-            //m_drivetrain.SetDefaultCommand(AutonomousCommand(m_drivetrain));
             break;
 
         default:
@@ -63,13 +64,21 @@ RobotContainer* RobotContainer::GetInstance() {
     return(m_robotContainer);
 }
 
+
 void RobotContainer::ConfigureButtonBindings() {  
     // while the "A" button is held, run the line alignment command
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
+
+    // Couple of things here
+    //
+    // WhenHeld or WhenPressed?  we probably want this command to run to completion
+    //
+    // we probably want a pair of commands - one to run the solenoid one way and another to run it in the other direction
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kB).WhenHeld(&m_solenoidCommand);
 }
+
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // The selected command will be run in autonomous
