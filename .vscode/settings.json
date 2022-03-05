@@ -18,6 +18,8 @@
   "files.associations": {
     "iostream": "cpp",
     "chrono": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "new": "cpp",
+    "*.inc": "cpp"
   }
 }
