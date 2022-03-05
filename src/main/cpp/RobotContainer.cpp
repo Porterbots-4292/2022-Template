@@ -53,9 +53,8 @@ RobotContainer::RobotContainer()
                                            Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
             break;
     }
-
-    // Adds the solenoid for testing
 }
+
 
 RobotContainer* RobotContainer::GetInstance() {
     if (m_robotContainer == NULL) {
