@@ -58,3 +58,14 @@ void Intake::RunIntakeScore() {
 void Intake::StopIntake() {
 
 }
+
+
+void Intake::Periodic() {
+    // Put code here to be run every loop
+
+}
+
+void Intake::SimulationPeriodic() {
+    // This method will be called once per scheduler run when in simulation
+
+}
