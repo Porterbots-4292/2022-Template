@@ -3,9 +3,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <frc/drive/DifferentialDrive.h>
 #include <frc/motorcontrol/MotorControllerGroup.h>
-#include <frc/DigitalInput.h>
 #include <frc/DoubleSolenoid.h>
 
 #include <ctre/phoenix.h>
