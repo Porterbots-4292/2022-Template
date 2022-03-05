@@ -8,6 +8,8 @@
 #include <frc/DigitalInput.h>
 #include <frc/DoubleSolenoid.h>
 
+#include <ctre/phoenix.h>
+
 
 #include "Constants.h"
 

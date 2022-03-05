@@ -13,10 +13,6 @@ Intake::Intake() {
     // we probably don't want this much stuff to show up during competition
     // but for robot development and debugging, it can be very useful to see
     // specific components on the robot are actually doing
-    SetName("Intake");
-    SetSubsystem("Intake");
-    AddChild("Intake Motor", &m_intakeMotor);
-    AddChild("Intake Cylinder", &m_intakeCylinder);
 }
 
 
