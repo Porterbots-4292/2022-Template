@@ -9,7 +9,7 @@
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
-    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain) {
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain), m_solenoidForward(m_intake, frc::DoubleSolenoid::Value::kForward), m_solenoidReverse(m_intake, frc::DoubleSolenoid::Value::kReverse), m_solenoidStop(m_intake, frc::DoubleSolenoid::Value::kOff){
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
@@ -76,7 +76,10 @@ void RobotContainer::ConfigureButtonBindings() {
     // WhenHeld or WhenPressed?  we probably want this command to run to completion
     //
     // we probably want a pair of commands - one to run the solenoid one way and another to run it in the other direction
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kB).WhenHeld(&m_solenoidCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(m_solenoidForward);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(m_solenoidReverse);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(m_solenoidStop);
+    
 }
 
 

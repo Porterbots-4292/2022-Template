@@ -18,13 +18,13 @@ Intake::Intake() {
 
 // put the intake in the loading position
 void Intake::SetIntakeLoadPosition() {
-
+    m_intakeCylinder.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
 
 // put the intake in the scoring position
 void Intake::SetIntakeScorePosition() {
-
+    m_intakeCylinder.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 
@@ -36,7 +36,11 @@ void Intake::SetIntakeScorePosition() {
 void Intake::SetIntakeTravelPosition() {
     
     }
-    
+
+void Intake::StopPneumatics(){
+    m_intakeCylinder.Set(frc::DoubleSolenoid::kOff);
+}
+
 // run the intake to load balls    
 void Intake::RunIntakeLoad() {
 
@@ -58,7 +62,6 @@ void Intake::StopIntake() {
 
 void Intake::Periodic() {
     // Put code here to be run every loop
-
 }
 
 void Intake::SimulationPeriodic() {

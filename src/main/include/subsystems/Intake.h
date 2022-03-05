@@ -46,6 +46,7 @@ public:
     void RunIntakeScore();
 
     void StopIntake();
+    void StopPneumatics();
 
     void Periodic() override;
     void SimulationPeriodic() override;

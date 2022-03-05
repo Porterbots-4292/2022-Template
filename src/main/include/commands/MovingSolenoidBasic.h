@@ -5,7 +5,7 @@
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/CommandBase.h>
 
-#include "subsystems/Drivetrain.h"
+#include "subsystems/Intake.h"
 #include <frc/DoubleSolenoid.h>
 
 
@@ -16,7 +16,7 @@
  */
 class MovingSolenoidBasic: public frc2::CommandHelper<frc2::CommandBase, MovingSolenoidBasic> {
 public:
-    explicit MovingSolenoidBasic();
+    explicit MovingSolenoidBasic(Intake& intake, frc::DoubleSolenoid::Value value);
 
     void Initialize() override;
     void Execute() override;
@@ -26,5 +26,6 @@ public:
 
 
 private:
-
+    Intake* m_intake;
+    frc::DoubleSolenoid::Value m_value;
 };
