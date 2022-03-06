@@ -16,7 +16,7 @@
  */
 class MovingSolenoidBasic: public frc2::CommandHelper<frc2::CommandBase, MovingSolenoidBasic> {
 public:
-    explicit MovingSolenoidBasic(Intake& intake, frc::DoubleSolenoid::Value value);
+    explicit MovingSolenoidBasic(Intake& intake, eIntakePosition position);
 
     void Initialize() override;
     void Execute() override;
@@ -27,5 +27,5 @@ public:
 
 private:
     Intake* m_intake;
-    frc::DoubleSolenoid::Value m_value;
+    eIntakePosition m_position;
 };

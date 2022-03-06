@@ -45,7 +45,7 @@ private:
     // commands
     AutonomousCommand m_autonomousCommand;
     LineAlignCommand  m_lineAlignCommand;
-    MovingSolenoidBasic m_solenoidForward;
+    MovingSolenoidBasic m_intakeLoadPositionCommand;
     MovingSolenoidBasic m_solenoidReverse;
     MovingSolenoidBasic m_solenoidStop;
 

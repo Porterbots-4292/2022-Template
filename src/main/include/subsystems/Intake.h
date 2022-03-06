@@ -11,12 +11,8 @@
 
 #include "Constants.h"
 
-#ifndef ZOGBOT
-#include <ctre/phoenix.h>
-#else   // ZOGBOT
-#include <rev/CANSparkMax.h>
-#endif  // ZOGBOT
-
+// enumeration for various high level intake positions - the intake code will handle the actual solenoid positions
+enum    eIntakePosition { IntakePosLoad, IntakePosScore, IntakePosTravel, IntakePosStop };
 
 /**
  *

@@ -3,8 +3,9 @@
 #include "commands/MovingSolenoidBasic.h"
 
 
-MovingSolenoidBasic::MovingSolenoidBasic(Intake& intake, frc::DoubleSolenoid::Value value) : m_intake(&intake){
-    m_value = value;
+MovingSolenoidBasic::MovingSolenoidBasic(Intake& intake, eIntakePosition pos) : m_intake(&intake) {
+    m_position = pos;
+
     // Use AddRequirements() here to declare subsystem dependencies
     // eg. AddRequirements(m_Subsystem);
     SetName("MovingSolenoidBasic");
@@ -18,17 +19,29 @@ void MovingSolenoidBasic::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MovingSolenoidBasic::Execute() {
-    if(m_value == frc::DoubleSolenoid::Value::kForward){
-        m_intake->SetIntakeLoadPosition();
+
+    switch (m_position) {
+
+        case IntakePosLoad:
+
+            m_intake->SetIntakeLoadPosition();
+            break;
+
+        case IntakePosScore:
+
+            m_intake->SetIntakeScorePosition();
+            break;
+
+        case IntakePosTravel:
+
+            m_intake->SetIntakeTravelPosition();
+            break;
+
+        case IntakePosStop:
+
+            m_intake->StopPneumatics();
+            break;
     }
-    else if (m_value == frc::DoubleSolenoid::Value::kReverse)
-    {
-        m_intake->SetIntakeScorePosition();
-    }
-    else if (m_value == frc::DoubleSolenoid::Value::kOff){
-        m_intake->StopPneumatics();
-    }
-    
 }
 
 
