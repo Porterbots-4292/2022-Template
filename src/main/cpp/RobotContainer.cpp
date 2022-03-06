@@ -9,7 +9,10 @@
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
-    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain), m_solenoidForward(m_intake, frc::DoubleSolenoid::Value::kForward), m_solenoidReverse(m_intake, frc::DoubleSolenoid::Value::kReverse), m_solenoidStop(m_intake, frc::DoubleSolenoid::Value::kOff){
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain),
+    m_solenoidForward(m_intake, frc::DoubleSolenoid::Value::kForward),
+    m_solenoidReverse(m_intake, frc::DoubleSolenoid::Value::kReverse),
+    m_solenoidStop(m_intake, frc::DoubleSolenoid::Value::kOff) {
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
@@ -23,9 +26,15 @@ RobotContainer::RobotContainer()
     ConfigureButtonBindings();
 
 
+#ifdef  ENABLE_CANDLE
+    ConfigureCANdle(&m_CANdle);
+#endif  // ENABLE_CANDLE
+
+
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 
     frc::SmartDashboard::PutData("Auto Mode", &m_chooser);
+
 
     // set the default drivetrain subsystem command
     //
@@ -86,4 +95,23 @@ void RobotContainer::ConfigureButtonBindings() {
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // The selected command will be run in autonomous
   return m_chooser.GetSelected();
+}
+
+
+#include <ctre/phoenix/led/RainbowAnimation.h>
+
+void RobotContainer::ConfigureCANdle(CANdle * candle) {
+
+    CANdleConfiguration config;
+    //RainbowAnimation    rainbow{1, 0.5, Porterbots::CANdle::kCountTotalLEDs};
+
+    config.stripType        = LEDStripType::RGB;
+    config.brightnessScalar = 1.0;      // full brightness
+
+    candle->ConfigAllSettings(config);
+
+    //candle->Animate(rainbow);
+
+#define TEST_COLOR  128, 0, 255
+    candle->SetLEDs(TEST_COLOR, 0, 0, Porterbots::CANdle::kCountTotalLEDs);
 }

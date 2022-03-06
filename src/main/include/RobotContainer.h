@@ -19,6 +19,8 @@
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
 
+#include <ctre/Phoenix.h>
+
 
 
 class RobotContainer {
@@ -42,6 +44,10 @@ private:
     Drivetrain   m_drivetrain;
     Intake       m_intake;
 
+#ifdef  ENABLE_CANDLE
+    CANdle       m_CANdle{Porterbots::CAN_ID::kCANdleID, ""};
+#endif  // ENABLE_CANDLE
+
     // commands
     AutonomousCommand m_autonomousCommand;
     LineAlignCommand  m_lineAlignCommand;
@@ -54,4 +60,8 @@ private:
     static RobotContainer* m_robotContainer;
 
     void ConfigureButtonBindings();
+
+#ifdef  ENABLE_CANDLE
+    void ConfigureCANdle(CANdle *);
+#endif  // ENABLE_CANDLE
 };

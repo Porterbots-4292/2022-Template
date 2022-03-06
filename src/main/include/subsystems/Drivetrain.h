@@ -9,6 +9,8 @@
 
 #include "Constants.h"
 
+#include <ctre/phoenix.h>
+
 #ifndef ZOGBOT
 #include <ctre/phoenix.h>
 #else   // ZOGBOT
@@ -53,7 +55,7 @@ private:
     bool    m_lineAlignCompleted;
 
 public:
-    Drivetrain();
+    Drivetrain(CANdle& candle);
 
     // a few different types of drive mode
     //
@@ -74,4 +76,7 @@ public:
 
     void Periodic() override;
     void SimulationPeriodic() override;
+
+    CANdle* m_candle;
+
 };

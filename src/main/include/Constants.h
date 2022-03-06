@@ -28,7 +28,14 @@
 // the bulk of the code base is totally the same with just a few small differences in the hardware being
 // used - we can accomodate the hardware differences and since these differences get wrapped by the higher
 // level WPILib functions, the higher level code is unchanged
-//#define     ZOGBOT
+#define     ZOGBOT
+
+
+// defining ENABLE_CANDLE enables code that drives a CTRE CANdle device to drive RGB LEDs both
+// on the device (and potentially on a string running off the CANdle)
+//
+// this enables calls to drive the LED from various prts of the code
+#define     ENABLE_CANDLE
 
 
 namespace   Porterbots {
@@ -47,6 +54,10 @@ namespace   Porterbots {
         int const       kMotorIntake       = 15;
 
         int const       kPcmID             = 21;
+
+#ifdef ENABLE_CANDLE
+        int const       kCANdleID          = 35;
+#endif  // ENABLE_CANDLE
     }
 
     namespace Drivetrain {
@@ -105,5 +116,25 @@ namespace   Porterbots {
             int const   kSolenoidPort1 = 3;
             int const   kSolenoidPort2 = 2;
     }
+
+#ifdef  ENABLE_CANDLE
+    namespace CANdle {
+        int const   kCountBuiltInLEDs = 8;
+        int const   kCountExternLEDs  = 25;
+        int const   kCountTotalLEDs   = kCountBuiltInLEDs + kCountExternLEDs;    
+    }
+
+#define CANDLE_RED              1.0, 0.0, 0.0
+#define CANDLE_BLUE             0.0, 0.0, 1.0
+#define CANDLE_GREEN            0.0, 1.0, 0.0
+#define CANDLE_ORANGE           1.0, 0.5, 0.0
+#define CANDLE_YELLOW           1.0, 1.0, 0.0
+#define CANDLE_MAGENTA          1.0, 0.0, 1.0
+#define CANDLE_CYAN             0.0, 1.0, 1.0
+#define CANDLE_PURPLE           0.5, 0.0, 1.0
+
+#define SET_ALL_LEDS(color)     SetLEDs(color, 0, Porterbots::CANdle::kCountTotalLEDs)
+
+#endif      // ENABLE_CANDLE
 
 }

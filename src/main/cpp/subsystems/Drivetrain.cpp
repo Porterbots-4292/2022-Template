@@ -4,7 +4,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <iostream>
 
-Drivetrain::Drivetrain() {
+Drivetrain::Drivetrain(CANdle& candle):
+m_candle(&candle) {
 
     std::cout << "WE INIT";
 

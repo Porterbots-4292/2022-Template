@@ -32,7 +32,10 @@ void LineAlignCommand::Initialize() {
     m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
                             Porterbots::LineDetection::kLineAlignSpeed,
                             false);
+
+    m_drivetrain->m_candle->SET_ALL_LEDS(CANDLE_YELLOW);
 }
+
 
 // Called repeatedly when this Command is scheduled to run
 void LineAlignCommand::Execute() {
@@ -69,10 +72,15 @@ void LineAlignCommand::Execute() {
     if(!left_sensor_detects_line && right_sensor_detects_line){
         // Rotate the robot at the rotate speed left
         m_drivetrain->TankDrive(Porterbots::LineDetection::kRotateSpeed, -Porterbots::LineDetection::kRotateSpeed, false);
+
+        m_drivetrain->m_candle->SET_ALL_LEDS(CANDLE_BLUE);
         }
     else if(left_sensor_detects_line && !right_sensor_detects_line){
         // Rotate the robot at the rotate speed right
         m_drivetrain->TankDrive(-Porterbots::LineDetection::kRotateSpeed, Porterbots::LineDetection::kRotateSpeed, false);
+
+        m_drivetrain->m_candle->SET_ALL_LEDS(CANDLE_BLUE);
+
     }
     else if(left_sensor_detects_line && right_sensor_detects_line){
         // Stops - everything is aligned!
@@ -82,11 +90,18 @@ void LineAlignCommand::Execute() {
     else{
         // Moves the chasiss at the lineAlignSpeed
         m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
+
+        m_drivetrain->m_candle->SET_ALL_LEDS(CANDLE_YELLOW);
+
         }
 }
 
 // Make this return true when this Command no longer needs to run Execute()
 bool LineAlignCommand::IsFinished() {
+
+    if (m_lineAlignCompleted) {
+        m_drivetrain->m_candle->SET_ALL_LEDS(CANDLE_GREEN);
+    }
 
     // this gets set by the Execute() routine when it reaches the terminal state,
     // that is the robot aligning itself to the alignment line - we're checking
