@@ -13,7 +13,6 @@ PorterbotDrive::PorterbotDrive(std::function<double()> in1,
 }
 
 void PorterbotDrive::Execute() {
-  std::cout << "EXECUTE";
   m_drivetrain->Drive(m_input1(), m_input2(), m_style, Porterbots::Drivetrain::kDriveSquareInputs);
 }
 

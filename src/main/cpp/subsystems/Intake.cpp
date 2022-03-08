@@ -25,7 +25,6 @@ void Intake::SetIntakeLoadPosition() {
     m_intakeCylinder.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
-
 // put the intake in the scoring position
 void Intake::SetIntakeScorePosition() {
     m_intakeCylinder.Set(frc::DoubleSolenoid::Value::kReverse);

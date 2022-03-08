@@ -9,7 +9,7 @@
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
-    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain), m_solenoidForward(m_intake, frc::DoubleSolenoid::Value::kForward), m_solenoidReverse(m_intake, frc::DoubleSolenoid::Value::kReverse), m_solenoidStop(m_intake, frc::DoubleSolenoid::Value::kOff){
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain), m_solenoidForward(m_intake, frc::DoubleSolenoid::Value::kForward), m_solenoidReverse(m_intake, frc::DoubleSolenoid::Value::kReverse), m_solenoidStop(m_intake, frc::DoubleSolenoid::Value::kOff), m_moveMotorCommand(){
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
@@ -18,10 +18,9 @@ RobotContainer::RobotContainer()
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
-
+    frc::SmartDashboard::PutData("Move Motor Command", new MoveMotor());
 
     ConfigureButtonBindings();
-
 
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 
@@ -79,7 +78,8 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(m_solenoidForward);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(m_solenoidReverse);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(m_solenoidStop);
-    
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kY).WhenHeld(&m_moveMotorCommand);
+
 }
 
 

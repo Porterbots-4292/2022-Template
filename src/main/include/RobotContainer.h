@@ -15,6 +15,7 @@
 #include "commands/LineAlignCommand.h"
 #include "commands/PorterbotDrive.h"
 #include "commands/MovingSolenoidBasic.h"
+#include "commands/MoveMotor.h"
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
@@ -48,6 +49,8 @@ private:
     MovingSolenoidBasic m_solenoidForward;
     MovingSolenoidBasic m_solenoidReverse;
     MovingSolenoidBasic m_solenoidStop;
+
+    MoveMotor m_moveMotorCommand = MoveMotor();
 
     frc::SendableChooser<frc2::Command*> m_chooser;
 

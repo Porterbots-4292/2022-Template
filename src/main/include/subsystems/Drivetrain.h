@@ -34,6 +34,7 @@ private:
     WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
     WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
+    
 #else   // ZOGBOT
 // only using 2 SparkMax controllers but we'll end up with the same motor controllers
 // defined so the code will all be the same (pretty much)

@@ -24,7 +24,6 @@ LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
 
 // Called just before this Command runs the first time
 void LineAlignCommand::Initialize() {
-
     m_lineAlignCompleted = false;
 
     // start moving ahead at our predefined speed to search for the alignment line

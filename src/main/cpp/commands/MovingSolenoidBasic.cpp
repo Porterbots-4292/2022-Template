@@ -18,17 +18,21 @@ void MovingSolenoidBasic::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MovingSolenoidBasic::Execute() {
+
+    // This moves the pneumatic cylinder based on the value passed in initially
     if(m_value == frc::DoubleSolenoid::Value::kForward){
+        // extends the cylinder
         m_intake->SetIntakeLoadPosition();
     }
     else if (m_value == frc::DoubleSolenoid::Value::kReverse)
     {
+        // de-extends the cylinder
         m_intake->SetIntakeScorePosition();
     }
     else if (m_value == frc::DoubleSolenoid::Value::kOff){
+        // stops the cylinders
         m_intake->StopPneumatics();
     }
-    
 }
 
 
