@@ -34,9 +34,9 @@ void LineAlignCommand::Initialize() {
                             false);
 }
 
-// Called repeatedly when this Command is scheduled to run
+// Called repeatedly when this Commansjjd is scheduled to run
 void LineAlignCommand::Execute() {
-
+    std::cout << "s";
     // first off - hit the motorcontroller so we don't get a timeout
     //
     // we shoudl be moving at this speed anyway so it won't really change the robot
