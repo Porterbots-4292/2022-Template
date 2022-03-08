@@ -26,7 +26,7 @@ private:
 
     WPI_VictorSPX m_intakeMotor{Porterbots::CAN_ID::kMotorIntake};
 
-    frc::DoubleSolenoid m_intakeCylinder{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM,
+    frc::DoubleSolenoid m_intakeCylinder{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH,
                                          Porterbots::Solenoids::kSolenoidPort1, Porterbots::Solenoids::kSolenoidPort2};
                                          
 public:

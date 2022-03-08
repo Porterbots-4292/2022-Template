@@ -102,8 +102,8 @@ namespace   Porterbots {
     }
 
     namespace Solenoids {
-            int const   kSolenoidPort1 = 3;
-            int const   kSolenoidPort2 = 2;
+            int const   kSolenoidPort1 = 0;
+            int const   kSolenoidPort2 = 1;
     }
 
 }
