@@ -8,7 +8,7 @@
 
 #include <ctre/phoenix.h>
 
-
+#include <frc/PneumaticHub.h>
 #include "Constants.h"
 
 // enumeration for various high level intake positions - the intake code will handle the actual solenoid positions
@@ -28,7 +28,9 @@ private:
 
     frc::DoubleSolenoid m_intakeCylinder{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH,
                                          Porterbots::Solenoids::kSolenoidPort1, Porterbots::Solenoids::kSolenoidPort2};
-                                         
+
+    frc::PneumaticHub m_hub{Porterbots::CAN_ID::kPcmID};
+
 public:
     Intake();
 
