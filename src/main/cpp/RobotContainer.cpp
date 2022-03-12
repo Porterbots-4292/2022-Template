@@ -84,3 +84,9 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // The selected command will be run in autonomous
   return m_chooser.GetSelected();
 }
+
+void RobotContainer::UpdateDashboard() {
+    m_drivetrain.UpdateDashboard();
+    m_imu.UpdateDashboard();
+    m_climb.UpdateDashboard();
+}

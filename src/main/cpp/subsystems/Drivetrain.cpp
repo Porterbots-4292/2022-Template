@@ -155,6 +155,4 @@ void Drivetrain::UpdateDashboard() {
     frc::SmartDashboard::PutData("DriveTrain: ", &m_robotDrive);
     frc::SmartDashboard::PutNumber("DriveTrain L: ", m_leftFrontController.Get());
     frc::SmartDashboard::PutNumber("DriveTrain R: ", m_rightFrontController.Get());
-    
-    m_imu.UpdateDashboard();
 }

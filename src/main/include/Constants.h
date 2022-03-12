@@ -6,6 +6,8 @@
 
 #include <iostream>             // mostly for cout-style debugging
 
+#include <rev/CANSparkMax.h>
+
 #pragma once
 
 
@@ -43,7 +45,9 @@ namespace   Porterbots {
         int const       kMotorRightRearID  = 11;
         int const       kMotorLeftFrontID  = 12;
         int const       kMotorLeftRearID   = 13;
-        int const       kPcmID             = 1;
+        int const       kMotorLeftClimb    = 15;
+        int const       kMotorRightClimb   = 16;
+        int const       kPcmID             = 21;
 
 #ifdef  ZOGBOT
         int const       kMotorSpinnerID    = 20;
@@ -100,7 +104,7 @@ namespace   Porterbots {
     }
 
 #ifdef ZOGBOT
-    namespace Ports {
+    namespace DIOPorts {
         int const       kEncoderAPort = 8;
         int const       kEncoderBPort = 9;
     }
@@ -109,6 +113,12 @@ namespace   Porterbots {
         double const    kSpinnerSpeed = 0.20;
 
         int const       kTargetDistance = 6 * 12;         // distance in inches
+    }
+
+    namespace Climb {
+        rev::SparkMaxLimitSwitch::Type const x = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
+        
+        rev::CANDigitalInput::LimitSwitchPolarity const       kClimbUpperSwitchMode = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
     }
     
 #endif      // ZOGBOT

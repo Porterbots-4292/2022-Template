@@ -54,7 +54,10 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+
+  m_container->UpdateDashboard();
+}
 
 /**
  * This function is called periodically during test mode.

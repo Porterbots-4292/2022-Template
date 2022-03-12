@@ -23,7 +23,7 @@ class Spinner: public frc2::SubsystemBase {
 private:
 
     WPI_VictorSPX   m_spinnerController{Porterbots::CAN_ID::kMotorSpinnerID};
-    frc::Encoder    m_encoder{Porterbots::Ports::kEncoderAPort, Porterbots::Ports::kEncoderBPort};
+    frc::Encoder    m_encoder{Porterbots::DIOPorts::kEncoderAPort, Porterbots::DIOPorts::kEncoderBPort};
 
     double          m_savedSpeed;
 

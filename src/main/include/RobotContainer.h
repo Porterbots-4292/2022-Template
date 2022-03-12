@@ -8,6 +8,7 @@
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Spinner.h"
 #include "subsystems/IMU.h"
+#include "subsystems/Climb.h"
 
 #include "commands/AutonomousCommand.h"
 #include "commands/LineAlignCommand.h"
@@ -29,6 +30,8 @@ public:
     frc2::Command* GetAutonomousCommand();
     static RobotContainer* GetInstance();
 
+    void UpdateDashboard();
+
     Spinner      m_spinner;
 
 private:
@@ -42,6 +45,8 @@ private:
     // subsystems
     Drivetrain   m_drivetrain;
     IMU          m_imu;
+    Climb        m_climb;
+    
     frc::Solenoid   m_solenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 0};
 
     frc::DoubleSolenoid   m_dblSolenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 4, 5};
