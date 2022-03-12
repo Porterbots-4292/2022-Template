@@ -116,7 +116,6 @@ namespace   Porterbots {
     }
 
     namespace Climb {
-        rev::SparkMaxLimitSwitch::Type const x = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
         
         rev::CANDigitalInput::LimitSwitchPolarity const       kClimbUpperSwitchMode = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
     }
