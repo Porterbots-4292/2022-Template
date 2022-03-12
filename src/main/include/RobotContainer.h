@@ -47,9 +47,9 @@ private:
     IMU          m_imu;
     Climb        m_climb;
     
-    frc::Solenoid   m_solenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 0};
+    frc::Solenoid   m_solenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH, 0};
 
-    frc::DoubleSolenoid   m_dblSolenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::CTREPCM, 4, 5};
+    frc::DoubleSolenoid   m_dblSolenoid{Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH, 4, 5};
 
     // commands
     AutonomousCommand       m_autonomousCommand;
