@@ -3,11 +3,17 @@
 #include "subsystems/Intake.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <iostream>
+#include "Constants.h"
+
 
 Intake::Intake() {
 
     std::cout << "Intake: Contructor" << std::endl;
-    m_hub.EnableCompressorAnalog(units::pounds_per_square_inch_t(40), units::pounds_per_square_inch_t(100));
+
+    // This is where we set up the compressor and enable it
+    m_hub.EnableCompressorAnalog(units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMinPressure), units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMinPressure));
+    
+    
     // this sets up a bunch of stats to display on the LiveWindow
     //
     // we probably don't want this much stuff to show up during competition

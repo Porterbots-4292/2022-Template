@@ -5,26 +5,26 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <Constants.h>
 
-
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
     : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain),
      m_intakeLoadPositionCommand(m_intake, IntakePosLoad),
      m_solenoidReverse(m_intake, IntakePosScore),
-     m_solenoidStop(m_intake, IntakePosStop) {
-
+     m_solenoidStop(m_intake, IntakePosStop),
+     m_testMagneticSwitchCommand(m_drivetrain, m_climb) {
+         
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
     frc::SmartDashboard::PutData(&m_intake);
+    frc::SmartDashboard::PutData(&m_climb);
 
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
-
+    frc::SmartDashboard::PutData("Test Magnetic Switch Command", new TestMagneticSwitchCommand(m_drivetrain, m_climb))
 
     ConfigureButtonBindings();
-
 
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 

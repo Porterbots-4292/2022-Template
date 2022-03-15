@@ -10,11 +10,13 @@
 
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Intake.h"
+#include "subsystems/Climb.h"
 
 #include "commands/AutonomousCommand.h"
 #include "commands/LineAlignCommand.h"
 #include "commands/PorterbotDrive.h"
 #include "commands/MovingSolenoidBasic.h"
+#include "commands/TestMagneticSwitchCommand.h"
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
@@ -41,6 +43,7 @@ private:
     // subsystems
     Drivetrain   m_drivetrain;
     Intake       m_intake;
+    Climb        m_climb;
 
     // commands
     AutonomousCommand m_autonomousCommand;
@@ -48,6 +51,7 @@ private:
     MovingSolenoidBasic m_intakeLoadPositionCommand;
     MovingSolenoidBasic m_solenoidReverse;
     MovingSolenoidBasic m_solenoidStop;
+    TestMagneticSwitchCommand m_testMagneticSwitchCommand;
 
     frc::SendableChooser<frc2::Command*> m_chooser;
 

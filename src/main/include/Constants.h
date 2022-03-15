@@ -75,6 +75,13 @@ namespace   Porterbots {
         int const       kIntakeScoreSpeed    = 1.0;
     }
 
+    namespace Pneumatics{
+            // The compressor will activate when the pressure drops below the min, and it will
+            // continue to stay on until the pressure hits the max
+            int const kMinPressure = 50;
+            int const kMaxPressure = 100;
+    }
+
     namespace Controller {
         int const       kDriveController     = 0;
         int const       kMechanismController = 1;    
