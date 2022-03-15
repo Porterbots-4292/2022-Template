@@ -22,7 +22,7 @@ RobotContainer::RobotContainer()
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
-    frc::SmartDashboard::PutData("Test Magnetic Switch Command", new TestMagneticSwitchCommand(m_drivetrain, m_climb))
+    frc::SmartDashboard::PutData("Test Magnetic Switch Command", new TestMagneticSwitchCommand(m_drivetrain, m_climb));
 
     ConfigureButtonBindings();
 

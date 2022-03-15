@@ -7,10 +7,11 @@
 #include "subsystems/Drivetrain.h"
 
 
-class TestMagneticSwitchCommand : public frc2::CommandHelper<frc2::CommandBase, PorterbotDrive>{
+class TestMagneticSwitchCommand : public frc2::CommandHelper<frc2::CommandBase, TestMagneticSwitchCommand>{
     public:
-        TestMagneticSwitchCommand::TestMagneticSwitchCommand(Climb& climb);
+        TestMagneticSwitchCommand(Drivetrain& drivetrain, Climb& climb);
 
+        void Initialize() override;
         void Execute() override;
         bool IsFinished() override;
         void End(bool interrupted) override;
