@@ -11,7 +11,7 @@ Intake::Intake() {
     std::cout << "Intake: Contructor" << std::endl;
 
     // This is where we set up the compressor and enable it
-    m_hub.EnableCompressorAnalog(units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMinPressure), units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMinPressure));
+    m_hub.EnableCompressorAnalog(units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMinPressure), units::pounds_per_square_inch_t(Porterbots::Pneumatics::kMaxPressure));
     
     
     // this sets up a bunch of stats to display on the LiveWindow

@@ -2,6 +2,10 @@
 
 #include "subsystems/Climb.h"
 
+Climb::Climb(){
+
+}
+
 bool Climb::GetLimitSwitch(){
     return m_magneticLimitSwitch.Get();
 }
