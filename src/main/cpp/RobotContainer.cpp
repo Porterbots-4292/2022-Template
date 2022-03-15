@@ -84,7 +84,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 #ifdef ZOGBOT
     frc2::POVButton leftPOVButton(&m_xboxDriveController, 270);
-    frc2::POVButton rightPovButton(&m_xboxDriveController, 90);
+    frc2::POVButton rightPovButton(&m_xboxDriveController, 45);
     
     leftPOVButton.WhenPressed(&m_spinnerLeftCommand);
     rightPovButton.WhenPressed(&m_spinnerRightCommand);
