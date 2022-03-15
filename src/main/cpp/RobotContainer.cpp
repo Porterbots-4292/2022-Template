@@ -3,6 +3,8 @@
 #include "RobotContainer.h"
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/Compressor.h>
+#include <frc2/command/button/POVButton.h>
 
 
 
@@ -58,6 +60,14 @@ RobotContainer::RobotContainer()
     }
 
     m_solenoid.Set(true);
+
+    frc::Compressor compressor(Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH);
+
+    compressor.EnableAnalog(0_psi, 120_psi);
+
+    frc::SmartDashboard::PutNumber("Compressor PSI: ", compressor.GetPressureSwitchValue());
+
+
 }
 
 RobotContainer* RobotContainer::GetInstance() {
@@ -73,8 +83,11 @@ void RobotContainer::ConfigureButtonBindings() {
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 #ifdef ZOGBOT
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(&m_spinnerLeftCommand);
-    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(&m_spinnerRightCommand);
+    frc2::POVButton leftPOVButton(&m_xboxDriveController, 270);
+    frc2::POVButton rightPovButton(&m_xboxDriveController, 90);
+    
+    leftPOVButton.WhenPressed(&m_spinnerLeftCommand);
+    rightPovButton.WhenPressed(&m_spinnerRightCommand);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).CancelWhenPressed(&m_spinnerLeftCommand)
                                                                                       .CancelWhenPressed(&m_spinnerRightCommand);
 #endif // ZOGBOT
