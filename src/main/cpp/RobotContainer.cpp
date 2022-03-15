@@ -23,7 +23,6 @@ RobotContainer::RobotContainer()
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Test Magnetic Switch Command", new TestMagneticSwitchCommand(m_drivetrain, m_climb));
-
     ConfigureButtonBindings();
 
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
@@ -74,11 +73,7 @@ void RobotContainer::ConfigureButtonBindings() {
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 
-    // Couple of things here
-    //
-    // WhenHeld or WhenPressed?  we probably want this command to run to completion
-    //
-    // we probably want a pair of commands - one to run the solenoid one way and another to run it in the other direction
+    // Solenoid moving commands
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(m_intakeLoadPositionCommand);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(m_solenoidReverse);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(m_solenoidStop);

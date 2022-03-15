@@ -58,7 +58,9 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+    frc::SmartDashboard::PutNumber("Encoder Count", m_container->m_encoder.Get());
+}
 
 /**
  * This function is called periodically during test mode.

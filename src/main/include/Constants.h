@@ -49,6 +49,15 @@ namespace   Porterbots {
         int const       kPcmID             = 21;
     }
 
+    namespace DIOPorts {
+            int const   kEncoderLeftAPort = 4;
+            int const   kEncoderLeftBPort = 5;
+            int const   kEncoderRightAPort = 2;
+            int const   kEncoderRightBPort = 3;
+            
+
+    }
+
     namespace Drivetrain {
 
         int const       kDriveModeArcade   = 0;
