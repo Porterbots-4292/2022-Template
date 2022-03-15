@@ -59,7 +59,9 @@ void Robot::TeleopInit() {
  * This function is called periodically during operator control.
  */
 void Robot::TeleopPeriodic() {
-    frc::SmartDashboard::PutNumber("Encoder Count", m_container->m_encoder.Get());
+    
+    frc::SmartDashboard::PutNumber("Encoder Count", m_container->m_encoder.GetDistance() * Porterbots::RobotSpecs::kWheelDiameter / Porterbots::RobotSpecs::kPulsesPerRevolution * Porterbots::RobotSpecs::kGearRatio * 3.14159265358979);
+
 }
 
 /**

@@ -35,16 +35,18 @@ public:
 
     // The robot's subsystems
 
-    
-    frc::Encoder m_encoder{Porterbots::DIOPorts::kEncoderLeftAPort, Porterbots::DIOPorts::kEncoderLeftBPort};
+    // 5.95 gear ratio
+    // 360 PPR
+    // 6 In diameter
 
+    frc::Encoder m_encoder{Porterbots::DIOPorts::kEncoderLeftAPort, Porterbots::DIOPorts::kEncoderLeftBPort};
+    
 private:
 
     RobotContainer();
 
     // controllers
     frc::XboxController m_xboxDriveController{Porterbots::Controller::kDriveController};
-    //frc::XboxController m_xboxMechanismController{Porterbots::Controller::kMechanismController};
 
     // subsystems
     Drivetrain   m_drivetrain;

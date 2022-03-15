@@ -122,4 +122,11 @@ namespace   Porterbots {
             int const   kSolenoidPort2 = 1;
     }
 
+    namespace RobotSpecs {
+            int const kWheelDiameter = 6;
+            double const kGearRatio = 5.95;
+            int const kPulsesPerRevolution = 360;
+            int const kNMotorsPerSide = 2;
+    }
+
 }
