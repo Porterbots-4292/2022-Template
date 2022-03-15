@@ -60,14 +60,6 @@ RobotContainer::RobotContainer()
     }
 
     m_solenoid.Set(true);
-
-    frc::Compressor compressor(Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH);
-
-    compressor.EnableAnalog(0_psi, 120_psi);
-
-    frc::SmartDashboard::PutNumber("Compressor PSI: ", compressor.GetPressureSwitchValue());
-
-
 }
 
 RobotContainer* RobotContainer::GetInstance() {

@@ -4,6 +4,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <frc/Compressor.h>
+
 
 void Robot::RobotInit() {}
 
@@ -56,11 +58,18 @@ void Robot::TeleopInit() {
  */
 void Robot::TeleopPeriodic() {
 
+    frc::Compressor compressor(Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH);
+
+    compressor.EnableAnalog(40_psi, 120_psi);
+
+    frc::SmartDashboard::PutNumber("System PSI: ", (compressor.GetPressure()).value());
+    frc::SmartDashboard::PutBoolean("Compressor Active: ", compressor.Enabled());
+
   m_container->UpdateDashboard();
 }
 
 /**
- * This function is called periodically during test mode.
+ * This function is called periodically during test moe.
  */
 void Robot::TestPeriodic() {}
 
