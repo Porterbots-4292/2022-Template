@@ -1,7 +1,7 @@
 #pragma once
 
-#include <frc2/commands/CommandBase.h>
-#include <frc2/commands/CommandHelper.h>
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/CommandBase.h>
 
 #include "subsystems/Climb.h"
 #include "subsystems/Drivetrain.h"
@@ -9,7 +9,7 @@
 
 class TestMagneticSwitchCommand : public frc2::CommandHelper<frc2::CommandBase, PorterbotDrive>{
     public:
-        TestMagneticSwitchCommand::TestMagneticSwitchCommand(Climb& climb) override;
+        TestMagneticSwitchCommand::TestMagneticSwitchCommand(Climb& climb);
 
         void Execute() override;
         bool IsFinished() override;

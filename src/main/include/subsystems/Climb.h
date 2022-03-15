@@ -18,7 +18,7 @@ private:
 public:
     Climb();
 
-    bool GetLimitSwitch() override;
+    bool GetLimitSwitch();
 
     void Periodic() override;
     void SimulationPeriodic() override;
