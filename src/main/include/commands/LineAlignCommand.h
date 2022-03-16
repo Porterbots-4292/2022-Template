@@ -37,6 +37,5 @@ private:
 
     bool        m_lineAlignCompleted;
     LineAlignStates m_currentState = makeAnAttempt;
-    uint64_t m_activation_time = 0; 
-    uint64_t m_current_time = 0;
+
 };

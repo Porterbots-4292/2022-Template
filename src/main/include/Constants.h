@@ -123,10 +123,14 @@ namespace   Porterbots {
     }
 
     namespace RobotSpecs {
-            int const kWheelDiameter = 6;
-            double const kGearRatio = 5.95;
-            int const kPulsesPerRevolution = 360;
-            int const kNMotorsPerSide = 2;
+            double const kWheelDiameter = 6;
+            double const kGearRatio = 1;
+            double const kPulsesPerRevolution = 360;
+    }
+
+    namespace MoveXDistance {
+            double const kWheelSpeed = 0.3;
     }
 
 }
+

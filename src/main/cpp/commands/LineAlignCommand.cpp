@@ -13,6 +13,7 @@ static uint64_t timeSinceEpoch(){
 */
 
 LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
+
 :m_drivetrain(&drivetrain) {
 
     // Use AddRequirements() here to declare subsystem dependencies

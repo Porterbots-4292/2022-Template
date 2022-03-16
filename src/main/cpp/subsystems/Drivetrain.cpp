@@ -6,8 +6,10 @@
 
 Drivetrain::Drivetrain() {
 
-    std::cout << "WE INIT";
 
+    // Set the enncoder distance per pulse
+    m_encoder.SetDistancePerPulse(-Porterbots::RobotSpecs::kWheelDiameter / Porterbots::RobotSpecs::kPulsesPerRevolution * Porterbots::RobotSpecs::kGearRatio * 3.14159265358979);
+    
     // this sets up a bunch of stats to display on the LiveWindow
     //
     // we probably don't want this much stuff to show up during competition
@@ -121,6 +123,13 @@ void Drivetrain::SimulationPeriodic() {
 
 }
 
+double Drivetrain::GetEncoderDistance(){
+    return m_encoder.GetDistance();
+}
+
+void Drivetrain::ResetEncoders(){
+    m_encoder.Reset();
+}
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

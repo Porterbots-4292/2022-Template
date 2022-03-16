@@ -6,7 +6,7 @@
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/DigitalInput.h>
-
+#include <frc/Encoder.h> 
 #include "Constants.h"
 
 #ifndef ZOGBOT
@@ -30,7 +30,7 @@ private:
     WPI_VictorSPX m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID};
     WPI_VictorSPX m_leftRearController{Porterbots::CAN_ID::kMotorLeftRearID};
     frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController, m_leftRearController};
-
+    
     WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
     WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
@@ -51,6 +51,8 @@ private:
     frc::DigitalInput m_leftLineSensor{Porterbots::LineDetection::kLeftLineSensor};
 
     bool    m_lineAlignCompleted;
+    frc::Encoder m_encoder{Porterbots::DIOPorts::kEncoderLeftAPort, Porterbots::DIOPorts::kEncoderLeftBPort};
+    bool m_encoderGood = false;
 
 public:
     Drivetrain();
@@ -69,6 +71,8 @@ public:
     void TankDrive(double left, double right, bool square);
     void ArcadeDrive(double speed, double turn, bool sqaure);
 
+    double GetEncoderDistance();
+    void ResetEncoders();
     // returns an indication from a specific sensor for line detection
     bool IsLineDetected(int sensor);
 

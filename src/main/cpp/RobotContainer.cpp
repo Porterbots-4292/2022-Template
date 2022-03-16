@@ -12,8 +12,10 @@ RobotContainer::RobotContainer()
      m_intakeLoadPositionCommand(m_intake, IntakePosLoad),
      m_solenoidReverse(m_intake, IntakePosScore),
      m_solenoidStop(m_intake, IntakePosStop),
-     m_testMagneticSwitchCommand(m_drivetrain, m_climb) {
-         
+     m_testMagneticSwitchCommand(m_drivetrain, m_climb),
+     m_moveXDistanceCommand(5, m_drivetrain){
+
+    // Endoer set
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
     frc::SmartDashboard::PutData(&m_intake);
@@ -23,6 +25,7 @@ RobotContainer::RobotContainer()
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Test Magnetic Switch Command", new TestMagneticSwitchCommand(m_drivetrain, m_climb));
+    frc::SmartDashboard::PutData("MoveXDistance", new MoveXDistance(100, m_drivetrain));
 
     ConfigureButtonBindings();
 
@@ -81,6 +84,8 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(m_intakeLoadPositionCommand);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(m_solenoidReverse);
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(m_solenoidStop);
+    
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kB).WhenPressed(m_moveXDistanceCommand);
     
 }
 
