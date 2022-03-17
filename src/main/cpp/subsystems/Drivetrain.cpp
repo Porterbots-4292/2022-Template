@@ -104,7 +104,6 @@ void Drivetrain::Drive(double input1, double input2, int driveMode, bool square)
 }
 
 void Drivetrain::TankDrive(double leftSpeed, double rightSpeed, bool square) {
-
     m_robotDrive.TankDrive(leftSpeed, rightSpeed, square);
 }
 

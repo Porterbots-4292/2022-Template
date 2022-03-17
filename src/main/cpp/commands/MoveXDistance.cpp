@@ -17,10 +17,14 @@ void MoveXDistance::Initialize() {
 void MoveXDistance::Execute() {
     double encoderDistance = m_drivetrain->GetEncoderDistance();
     double scaleValue = 1;
+
+    // Right here we change the scale value so that when we are closer to the target position, we slow down
     if(abs(m_x - encoderDistance) < m_tolerance){
         scaleValue = ((m_x - encoderDistance) / m_tolerance);
         scaleValue *= scaleValue * 1.5;
     }
+    
+    // We move robot and when we exceed our target we stop
     if (encoderDistance >= m_x) {
         m_drivetrain->ArcadeDrive(-Porterbots::MoveXDistance::kWheelSpeed,0,false);
         m_encoderGood = true;

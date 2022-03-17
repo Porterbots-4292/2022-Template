@@ -47,6 +47,11 @@ namespace   Porterbots {
         int const       kMotorIntake       = 15;
 
         int const       kPcmID             = 21;
+
+
+        // Climb motors
+        int const       kClimbMotorLeft    =   ;
+        int const       kClimbMotorRight   =   ;
     }
 
     namespace DIOPorts {

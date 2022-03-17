@@ -19,7 +19,7 @@ void TestMagneticSwitchCommand::Execute(){
         m_drivetrain->ArcadeDrive(0,0,false);
     } */
     
-    if(!(m_climb->GetLimitSwitch())) {
+    if((m_climb->GetLimitSwitch())) {
         m_drivetrain->ArcadeDrive(0.5, 0, false);
     } else {
         m_drivetrain->ArcadeDrive(0,0,false);
