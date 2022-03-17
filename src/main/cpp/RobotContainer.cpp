@@ -3,22 +3,28 @@
 #include "RobotContainer.h"
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-
+#include <Constants.h>
 
 
 RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
-    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain) {
+    : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain),
+     m_intakeLoadPositionCommand(m_intake, IntakePosLoad),
+     m_solenoidReverse(m_intake, IntakePosScore),
+     m_solenoidStop(m_intake, IntakePosStop) {
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData(&m_drivetrain);
+    frc::SmartDashboard::PutData(&m_intake);
 
     // SmartDashboard Buttons
     frc::SmartDashboard::PutData("Autonomous Command", new AutonomousCommand(m_drivetrain));
     frc::SmartDashboard::PutData("Line Align Command", new LineAlignCommand(m_drivetrain));
 
+
     ConfigureButtonBindings();
+
 
     m_chooser.SetDefaultOption("Autonomous Command", new AutonomousCommand(m_drivetrain));
 
@@ -36,25 +42,23 @@ RobotContainer::RobotContainer()
     switch (Porterbots::Drivetrain::kDriveModeDefault) {
 
         case Porterbots::Drivetrain::kDriveModeTank:
-            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
-                                           [this] { return -(m_xboxDriveController.GetRightY()); },
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
+                                           [this] { return -(m_xboxDriveController.GetRightY()) * Porterbots::Drivetrain::kControlScaleFactor; },
                                            Porterbots::Drivetrain::kDriveModeTank, m_drivetrain));
-            //m_drivetrain.SetDefaultCommand(AutonomousCommand(m_drivetrain));
             break;
 
         default:
             std::cout << "RobotContainer: Invalid drive mode - defaulting to Arcade-style" << std::endl;
-
             // FALLS THROUGH!!!
-
         case Porterbots::Drivetrain::kDriveModeArcade:
         
-            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()); },
-                                           [this] { return m_xboxDriveController.GetRightX(); },
+            m_drivetrain.SetDefaultCommand(PorterbotDrive([this] { return -(m_xboxDriveController.GetLeftY()) * Porterbots::Drivetrain::kControlScaleFactor; },
+                                           [this] { return m_xboxDriveController.GetRightX() * Porterbots::Drivetrain::kControlScaleFactor; },
                                            Porterbots::Drivetrain::kDriveModeArcade, m_drivetrain));
             break;
     }
 }
+
 
 RobotContainer* RobotContainer::GetInstance() {
     if (m_robotContainer == NULL) {
@@ -63,12 +67,24 @@ RobotContainer* RobotContainer::GetInstance() {
     return(m_robotContainer);
 }
 
+
 void RobotContainer::ConfigureButtonBindings() {  
     // while the "A" button is held, run the line alignment command
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
+
+    // Couple of things here
+    //
+    // WhenHeld or WhenPressed?  we probably want this command to run to completion
+    //
+    // we probably want a pair of commands - one to run the solenoid one way and another to run it in the other direction
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kRightBumper).WhenPressed(m_intakeLoadPositionCommand);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kLeftBumper).WhenPressed(m_solenoidReverse);
+    frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).WhenPressed(m_solenoidStop);
+    
 }
+
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // The selected command will be run in autonomous

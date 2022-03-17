@@ -38,19 +38,24 @@ namespace   Porterbots {
 // they respond at this address
 
     namespace CAN_ID {
-
+        // drive motors
         int const       kMotorRightFrontID = 10;
         int const       kMotorRightRearID  = 11;
         int const       kMotorLeftFrontID  = 12;
         int const       kMotorLeftRearID   = 13;
+
+        int const       kMotorIntake       = 15;
+
+        int const       kPcmID             = 21;
     }
 
     namespace Drivetrain {
 
         int const       kDriveModeArcade   = 0;
         int const       kDriveModeTank     = 1;
-        int const       kDriveModeDefault  = kDriveModeTank;
-
+        int const       kDriveModeDefault  = kDriveModeArcade;
+        
+        double const    kControlScaleFactor = 0.5;
 #ifndef ZOGBOT
         double const    kMaxOutput      = 0.5;
 #else   // ZOGBOT
@@ -63,6 +68,11 @@ namespace   Porterbots {
         // reduce the low speed sensitivity
         bool const      kDriveSquareInputs = true;   
 
+    }
+
+    namespace Intake {
+        int const       kIntakeLoadSpeed     = 0.5;
+        int const       kIntakeScoreSpeed    = 1.0;
     }
 
     namespace Controller {
@@ -85,10 +95,15 @@ namespace   Porterbots {
         double const kRotateSpeed = 0.4;
 
 #ifndef ZOGBOT
-        double const    kLineAlignSpeed = 0.5;
+        double const    kLineAlignSpeed = 0.4;
 #else // ZOGBOT
         double const    kLineAlignSpeed = 0.5;
 #endif  // ZOGBOT
+    }
+
+    namespace Solenoids {
+            int const   kSolenoidPort1 = 0;
+            int const   kSolenoidPort2 = 1;
     }
 
 }

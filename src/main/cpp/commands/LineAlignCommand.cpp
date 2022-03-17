@@ -4,10 +4,13 @@
 #include <iostream>
 #include "commands/LineAlignCommand.h"
 
+/*
+This was used for time managament but not anymore :D
 static uint64_t timeSinceEpoch(){
     using namespace std::chrono;
     return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
+*/
 
 LineAlignCommand::LineAlignCommand(Drivetrain& drivetrain)
 :m_drivetrain(&drivetrain) {
@@ -25,16 +28,15 @@ void LineAlignCommand::Initialize() {
     m_lineAlignCompleted = false;
 
     // start moving ahead at our predefined speed to search for the alignment line
-    //
-    // do not swqare the input
+    // do not square the input
     m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,
                             Porterbots::LineDetection::kLineAlignSpeed,
                             false);
 }
 
-// Called repeatedly when this Command is scheduled to run
+// Called repeatedly when this Commansjjd is scheduled to run
 void LineAlignCommand::Execute() {
-
+    std::cout << "s";
     // first off - hit the motorcontroller so we don't get a timeout
     //
     // we shoudl be moving at this speed anyway so it won't really change the robot
@@ -58,52 +60,29 @@ void LineAlignCommand::Execute() {
 
         return;
     }
-    
-
-    // all we want to do is check to see if we've encountered a line as the Initialize()
-    // routine already got us moving
-    //
-    // once we've seen a line, using either sensor, stop the robot as we're done for now
-    // (at least in this demo - we'll want to add the real line alignment code here to do
-    // the real work)
-    //
-    // we stop the drivetrain and we set the m_lineAlignCompleted flag to true
-    //
-    // later we'll want to put the actual alignment logic in here
-
-    // aligning code:
 
     bool left_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kLeftLineSensor);
     bool right_sensor_detects_line = m_drivetrain->IsLineDetected(Porterbots::LineDetection::kRightLineSensor);
     
-    switch(m_currentState){
-        case LineAlignStates::makeAnAttempt:
-            if(!left_sensor_detects_line && right_sensor_detects_line){
-                m_drivetrain->TankDrive(Porterbots::LineDetection::kRotateSpeed, -Porterbots::LineDetection::kRotateSpeed, false);
-            }
-            else if(left_sensor_detects_line && !right_sensor_detects_line){
-                m_drivetrain->TankDrive(-Porterbots::LineDetection::kRotateSpeed, Porterbots::LineDetection::kRotateSpeed, false);
-            }
-            else if(left_sensor_detects_line && right_sensor_detects_line){
-                // Stops - everything is aligned!
-                m_drivetrain->TankDrive(0,0,false);
-            }
-            else{
-                m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
-            }
-        break;
+    // LIGN ALIGHMENT CODE
 
+    if(!left_sensor_detects_line && right_sensor_detects_line){
+        // Rotate the robot at the rotate speed left
+        m_drivetrain->TankDrive(Porterbots::LineDetection::kRotateSpeed, -Porterbots::LineDetection::kRotateSpeed, false);
+        }
+    else if(left_sensor_detects_line && !right_sensor_detects_line){
+        // Rotate the robot at the rotate speed right
+        m_drivetrain->TankDrive(-Porterbots::LineDetection::kRotateSpeed, Porterbots::LineDetection::kRotateSpeed, false);
     }
-
-
-    // else we just let the robot crawl forward at the kLineAlignSpeed for now
-
-    // we'll check sensors again the next time through this routine
-    //
-    // doing short quick checks or changes and getting out is a key part
-    // of keeping the scheduler (and the entire robot) running as it should be
-    //
-    // we don't loop in here unless it's *really* short and totally deterministic!
+    else if(left_sensor_detects_line && right_sensor_detects_line){
+        // Stops - everything is aligned!
+        m_lineAlignCompleted = true;
+        m_drivetrain->TankDrive(0,0,false);
+        }
+    else{
+        // Moves the chasiss at the lineAlignSpeed
+        m_drivetrain->TankDrive(Porterbots::LineDetection::kLineAlignSpeed,Porterbots::LineDetection::kLineAlignSpeed, false);
+        }
 }
 
 // Make this return true when this Command no longer needs to run Execute()

@@ -10,7 +10,7 @@
 #include "Constants.h"
 
 #ifndef ZOGBOT
-#include <ctre/phoenix.h>
+#include "CANVenom.h"
 #else   // ZOGBOT
 #include <rev/CANSparkMax.h>
 #endif  // ZOGBOT
@@ -27,12 +27,12 @@ private:
     // for methods that implement subsystem capabilities
 
 #ifndef ZOGBOT        //normal Porterbots build does not have this defined
-    WPI_VictorSPX m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID};
-    WPI_VictorSPX m_leftRearController{Porterbots::CAN_ID::kMotorLeftRearID};
+    frc::CANVenom m_leftFrontController{Porterbots::CAN_ID::kMotorLeftFrontID};
+    frc::CANVenom m_leftRearController{Porterbots::CAN_ID::kMotorLeftRearID};
     frc::MotorControllerGroup m_leftSideMotors{m_leftFrontController, m_leftRearController};
 
-    WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
-    WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
+    frc::CANVenom m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
+    frc::CANVenom m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
 #else   // ZOGBOT
 // only using 2 SparkMax controllers but we'll end up with the same motor controllers
