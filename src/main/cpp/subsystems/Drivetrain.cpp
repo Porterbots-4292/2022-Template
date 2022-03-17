@@ -57,6 +57,9 @@ Drivetrain::Drivetrain() {
     // motorcontroller group so we set them individually here - this seems to work
     m_leftFrontController.SetInverted(false);
     m_rightFrontController.SetInverted(true);
+
+    m_leftEncoder.SetPosition(0.0);
+    
 #ifndef ZOGBOT
     m_leftRearController.SetInverted(false);
     m_rightRearController.SetInverted(true);
@@ -155,4 +158,6 @@ void Drivetrain::UpdateDashboard() {
     frc::SmartDashboard::PutData("DriveTrain: ", &m_robotDrive);
     frc::SmartDashboard::PutNumber("DriveTrain L: ", m_leftFrontController.Get());
     frc::SmartDashboard::PutNumber("DriveTrain R: ", m_rightFrontController.Get());
+    frc::SmartDashboard::PutNumber("DriveTrain L Encoder: ", m_leftEncoder.GetPosition());
+
 }

@@ -15,10 +15,10 @@
 
 #ifdef ZOGBOT
 #include <rev/CANSparkMax.h>        // this could also be included unconditionally
-                                    // if you want to make having the REV libs installed a requirement to buil
+                                    // if you want to make having the REV libs installed a requirement to build
 #endif  // ZOGBOT
 
-
+#include <CANVenom.h>
 
 
 
@@ -40,7 +40,7 @@ private:
 
     WPI_VictorSPX m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID};
     WPI_VictorSPX m_rightRearController{Porterbots::CAN_ID::kMotorRightRearID};
-    frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};    
+    frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController, m_rightRearController};        
 #else   // ZOGBOT
 // only using 2 SparkMax controllers but we'll end up with the same motor controllers
 // defined so the code will all be the same (pretty much)
@@ -49,7 +49,12 @@ private:
 
     rev::CANSparkMax m_rightFrontController{Porterbots::CAN_ID::kMotorRightFrontID, rev::CANSparkMax::MotorType::kBrushless};
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController};   
+
+    rev::SparkMaxRelativeEncoder m_leftEncoder = m_leftFrontController.GetEncoder();
+
 #endif  // ZOGBOT
+
+    frc::CANVenom testVenomController{61};
 
     frc::DifferentialDrive m_robotDrive{m_leftFrontController, m_rightFrontController};
 
