@@ -51,6 +51,7 @@ private:
     frc::MotorControllerGroup m_rightSideMotors{m_rightFrontController};   
 
     rev::SparkMaxRelativeEncoder m_leftEncoder = m_leftFrontController.GetEncoder();
+    rev::SparkMaxRelativeEncoder m_rightEncoder = m_rightFrontController.GetEncoder();
 
 #endif  // ZOGBOT
 

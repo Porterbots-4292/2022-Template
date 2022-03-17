@@ -59,6 +59,7 @@ Drivetrain::Drivetrain() {
     m_rightFrontController.SetInverted(true);
 
     m_leftEncoder.SetPosition(0.0);
+    m_rightEncoder.SetPosition(0.0);
     
 #ifndef ZOGBOT
     m_leftRearController.SetInverted(false);
@@ -159,5 +160,6 @@ void Drivetrain::UpdateDashboard() {
     frc::SmartDashboard::PutNumber("DriveTrain L: ", m_leftFrontController.Get());
     frc::SmartDashboard::PutNumber("DriveTrain R: ", m_rightFrontController.Get());
     frc::SmartDashboard::PutNumber("DriveTrain L Encoder: ", m_leftEncoder.GetPosition());
+    frc::SmartDashboard::PutNumber("DriveTrain R Encoder: ", m_rightEncoder.GetPosition());
 
 }
