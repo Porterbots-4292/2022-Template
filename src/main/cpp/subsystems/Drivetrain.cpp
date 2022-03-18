@@ -61,6 +61,8 @@ Drivetrain::Drivetrain() {
     m_leftEncoder.SetPosition(0.0);
     m_rightEncoder.SetPosition(0.0);
     
+    m_leftEncoder.SetPositionConversionFactor(1.0 / 5.95 * 6);      // Typical gearbox driving a 6" wheel
+    m_rightEncoder.SetPositionConversionFactor(1.0 / 5.95 * 6);     // these should really be constants!!!
 #ifndef ZOGBOT
     m_leftRearController.SetInverted(false);
     m_rightRearController.SetInverted(true);
@@ -161,5 +163,9 @@ void Drivetrain::UpdateDashboard() {
     frc::SmartDashboard::PutNumber("DriveTrain R: ", m_rightFrontController.Get());
     frc::SmartDashboard::PutNumber("DriveTrain L Encoder: ", m_leftEncoder.GetPosition());
     frc::SmartDashboard::PutNumber("DriveTrain R Encoder: ", m_rightEncoder.GetPosition());
+    frc::SmartDashboard::PutNumber("DriveTrain L PositionConversionFactor: ", m_leftEncoder.GetPositionConversionFactor());
+    frc::SmartDashboard::PutNumber("DriveTrain R PositionConversionFactor: ", m_rightEncoder.GetPositionConversionFactor());
+    frc::SmartDashboard::PutNumber("DriveTrain L VelocityConversionFactor: ", m_leftEncoder.GetVelocityConversionFactor());
+    frc::SmartDashboard::PutNumber("DriveTrain R VelocityConversionFactor: ", m_rightEncoder.GetVelocityConversionFactor());
 
 }
