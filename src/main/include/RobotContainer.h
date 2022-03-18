@@ -18,6 +18,7 @@
 #include "commands/MovingSolenoidBasic.h"
 #include "commands/TestMagneticSwitchCommand.h"
 #include "commands/MoveXDistance.h"
+#include "commands/InitializeClimb.h"
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
@@ -60,6 +61,7 @@ private:
     MovingSolenoidBasic m_solenoidStop;
     TestMagneticSwitchCommand m_testMagneticSwitchCommand;
     MoveXDistance m_moveXDistanceCommand;
+    InitializeClimb m_initializeClimbCommand;
 
 
     frc::SendableChooser<frc2::Command*> m_chooser;

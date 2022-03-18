@@ -28,9 +28,15 @@ class Climb: public frc2::SubsystemBase {
 private:
     // Initialize the two motors that will be controlling the arms going up and down
     rev::CANSparkMax m_climbLeftArmMotor{Porterbots::CAN_ID::kClimbMotorLeft, rev::CANSparkMax::MotorType::kBrushless};
-    rev::CANSparkMax m_climbRightArmMotor{Porterbots::CAN_ID::kClimbMotorLeft, rev::CANSparkMax::MotorType::kBrushless};
+    rev::CANSparkMax m_climbRightArmMotor{Porterbots::CAN_ID::kClimbMotorRight, rev::CANSparkMax::MotorType::kBrushless};
     
     frc::MotorControllerGroup m_climbArmMotors{m_climbLeftArmMotor, m_climbRightArmMotor};
+
+    /*
+    // Encoders
+    rev::SparkMaxRelativeEncoder m_climbLeftArmEncoder;
+    rev::SparkMaxRelativeEncoder m_climbRightArmEncoder;
+    */
 
     // This will be the Climb's state
     ClimbingStates m_currentState = ClimbingStates::stopped;
@@ -48,6 +54,8 @@ public:
     void StopArm();
     void LowerArm();
     void RaiseArm();
+
+    void ResetEncoders();
 
     void Periodic() override;
     void SimulationPeriodic() override;

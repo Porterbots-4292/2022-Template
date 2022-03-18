@@ -60,7 +60,6 @@ void Robot::TeleopInit() {
  */
 void Robot::TeleopPeriodic() {
     
-    
     frc::SmartDashboard::PutNumber("Encoder Count", m_container->m_drivetrain.GetEncoderDistance());
 
 }

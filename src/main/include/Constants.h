@@ -50,8 +50,9 @@ namespace   Porterbots {
 
 
         // Climb motors
-        int const       kClimbMotorLeft    =   ;
-        int const       kClimbMotorRight   =   ;
+        int const       kClimbMotorLeft    =   16;
+        int const       kClimbMotorRight   =   17;
+
     }
 
     namespace DIOPorts {
@@ -135,6 +136,11 @@ namespace   Porterbots {
 
     namespace MoveXDistance {
             double const kWheelSpeed = 0.3;
+    }
+
+    namespace Climb {
+            double const kLowerSpeed = -0.1;
+            double const kRaiseSpeed = 0.1;
     }
 
 }

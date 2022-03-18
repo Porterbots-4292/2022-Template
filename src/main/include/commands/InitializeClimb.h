@@ -20,5 +20,6 @@ class InitializeClimb: public frc2::CommandHelper<frc2::CommandBase, InitializeC
 
     private:
         Climb* m_climb;
+        bool m_isFinished = false;
         
 };
