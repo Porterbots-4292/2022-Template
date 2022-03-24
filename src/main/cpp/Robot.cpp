@@ -53,18 +53,10 @@ void Robot::TeleopInit() {
   }
 }
 
-  frc::Compressor compressor(Porterbots::CAN_ID::kPcmID, frc::PneumaticsModuleType::REVPH);
-
 /**
  * This function is called periodically during operator control.
  */
 void Robot::TeleopPeriodic() {
-
-
-  compressor.EnableAnalog(40_psi, 120_psi);
-
-  frc::SmartDashboard::PutNumber("System PSI: ", (compressor.GetPressure()).value());
-  frc::SmartDashboard::PutBoolean("Compressor Active: ", compressor.Enabled());
 
   m_container->UpdateDashboard();
 }
