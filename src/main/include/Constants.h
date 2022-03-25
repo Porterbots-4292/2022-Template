@@ -117,7 +117,7 @@ namespace   Porterbots {
 
     namespace Climb {
         
-        rev::CANDigitalInput::LimitSwitchPolarity const       kClimbUpperSwitchMode = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
+        //rev::CANDigitalInput::LimitSwitchPolarity const       kClimbUpperSwitchMode = rev::SparkMaxLimitSwitch::LimitSwitchPolarity::kNormallyOpen;
     }
     
 #endif      // ZOGBOT

@@ -14,7 +14,7 @@ Climb::Climb() {
     SetName("Climb");
 
     // enable limit switches
-    m_upperLimitSwitch.EnableLimitSwitch(true);
+//    m_upperLimitSwitch.EnableLimitSwitch(true);
 
     m_leftClimbController.Set(0.1);
 
@@ -24,7 +24,8 @@ Climb::Climb() {
 
 bool Climb::GetUpperLimitSwitch() {
 
-    return m_upperLimitSwitch.Get();
+//    return m_upperLimitSwitch.Get();
+return true;
 }
 
 

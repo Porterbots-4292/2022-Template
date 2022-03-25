@@ -14,6 +14,7 @@
 #include "commands/LineAlignCommand.h"
 #include "commands/SpinnerCommand.h"
 #include "commands/PorterbotDrive.h"
+#include "commands/CompoundCommand.h"
 
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
@@ -56,6 +57,7 @@ private:
     LineAlignCommand        m_lineAlignCommand;
     SpinnerRightCommand     m_spinnerRightCommand;
     SpinnerLeftCommand      m_spinnerLeftCommand;
+    CompoundCommand         m_compoundCommand;
 
     frc::SendableChooser<frc2::Command*> m_chooser;
 

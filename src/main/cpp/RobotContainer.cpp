@@ -12,7 +12,8 @@ RobotContainer* RobotContainer::m_robotContainer = NULL;
 
 RobotContainer::RobotContainer()
     : m_autonomousCommand(m_drivetrain), m_lineAlignCommand(m_drivetrain),
-      m_spinnerRightCommand(m_spinner), m_spinnerLeftCommand(m_spinner) {
+      m_spinnerRightCommand(m_spinner), m_spinnerLeftCommand(m_spinner),
+      m_compoundCommand(m_drivetrain, m_spinner) {
 
     // Smartdashboard Subsystems
     frc::SmartDashboard::PutData("DriveTrain:  ", &m_drivetrain);

@@ -7,6 +7,7 @@
 #include <frc2/command/CommandBase.h>
 
 #include "subsystems/Drivetrain.h"
+#include "subsystems/Spinner.h"
 
 /**
  *

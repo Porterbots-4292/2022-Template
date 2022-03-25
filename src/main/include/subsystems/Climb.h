@@ -25,7 +25,7 @@ private:
     rev::CANSparkMax m_rightClimbController{Porterbots::CAN_ID::kMotorRightClimb, rev::CANSparkMax::MotorType::kBrushless};
 #endif  // ZOGBOT
 
-    rev::SparkMaxLimitSwitch m_upperLimitSwitch = m_leftClimbController.GetForwardLimitSwitch(Porterbots::Climb::kClimbUpperSwitchMode);
+//    rev::SparkMaxLimitSwitch m_upperLimitSwitch = m_leftClimbController.GetForwardLimitSwitch(Porterbots::Climb::kClimbUpperSwitchMode);
     
 public:
     Climb();
