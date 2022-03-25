@@ -1,7 +1,8 @@
 // RobotContainer.cpp
 
 #include "RobotContainer.h"
-#include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/Compressor.h>
 #include <frc2/command/button/POVButton.h>
@@ -77,10 +78,12 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
 #ifdef ZOGBOT
     frc2::POVButton leftPOVButton(&m_xboxDriveController, 270);
-    frc2::POVButton rightPovButton(&m_xboxDriveController, 45);
+    frc2::POVButton rightPOVButton(&m_xboxDriveController, 45);
+    frc2::POVButton downPOVButton(&m_xboxDriveController, 180);
     
     leftPOVButton.WhenPressed(&m_spinnerLeftCommand);
-    rightPovButton.WhenPressed(&m_spinnerRightCommand);
+    rightPOVButton.WhenPressed(&m_spinnerRightCommand);
+    downPOVButton.WhenPressed(frc2::SequentialCommandGroup(m_spinnerLeftCommand, m_spinnerRightCommand, m_spinnerLeftCommand));
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).CancelWhenPressed(&m_spinnerLeftCommand)
                                                                                       .CancelWhenPressed(&m_spinnerRightCommand);
 #endif // ZOGBOT
@@ -93,6 +96,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
 
 void RobotContainer::UpdateDashboard() {
     m_drivetrain.UpdateDashboard();
-    m_imu.UpdateDashboard();
-    m_climb.UpdateDashboard();
+    //m_imu.UpdateDashboard();
+    //m_climb.UpdateDashboard();
 }

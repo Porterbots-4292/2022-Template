@@ -4,6 +4,6 @@
 
 CompoundCommand::CompoundCommand(Drivetrain& drive, Spinner &spinner) {
 
-    AddCommands(LineAlignCommand(drive), SpinnerLeftCommand(spinner));
+    AddCommands(LineAlignCommand(drive), SpinnerLeftCommand(spinner), SpinnerRightCommand(spinner));
 
 }
