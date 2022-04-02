@@ -76,6 +76,7 @@ void RobotContainer::ConfigureButtonBindings() {
     //
     // it will stop when the button is released or when it completes (after aligning hopefully)
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kA).WhenHeld(&m_lineAlignCommand);
+
 #ifdef ZOGBOT
     frc2::POVButton leftPOVButton(&m_xboxDriveController, 270);
     frc2::POVButton rightPOVButton(&m_xboxDriveController, 45);
@@ -83,7 +84,10 @@ void RobotContainer::ConfigureButtonBindings() {
     
     leftPOVButton.WhenPressed(&m_spinnerLeftCommand);
     rightPOVButton.WhenPressed(&m_spinnerRightCommand);
-    downPOVButton.WhenPressed(frc2::SequentialCommandGroup(m_spinnerLeftCommand, m_spinnerRightCommand, m_spinnerLeftCommand));
+
+    downPOVButton.WhenPressed(frc2::SequentialCommandGroup(m_spinnerLeftCommand, m_spinnerRightCommand,
+                                      frc2::SequentialCommandGroup(m_spinnerLeftCommand, m_spinnerRightCommand, m_spinnerLeftCommand)));
+
     frc2::JoystickButton(&m_xboxDriveController, (int)frc::XboxController::Button::kX).CancelWhenPressed(&m_spinnerLeftCommand)
                                                                                       .CancelWhenPressed(&m_spinnerRightCommand);
 #endif // ZOGBOT
